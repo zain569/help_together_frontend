@@ -1,14 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/navbar.module.css';
+import { readAuthSession } from '../utils/authSession';
 
-function Navbar({ isLoggedIn = false }) {
+function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [auth, setAuth] = useState(readAuthSession());
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
+    const isLoggedIn = Boolean(auth?.token || auth?.isUser);
+    const profileImage = auth?.user?.profileimage || auth?.user?.imageurl || '';
+    const profileName = auth?.user?.displayName || auth?.user?.firstname || 'User';
+    const profileInitials = profileName
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part.charAt(0).toUpperCase())
+        .join('') || 'U';
     const isActive = (route) => route === '/' ? pathname === '/' : pathname.startsWith(route);
+
+    useEffect(() => {
+        const syncAuth = () => setAuth(readAuthSession());
+        syncAuth();
+        window.addEventListener('auth:change', syncAuth);
+        return () => window.removeEventListener('auth:change', syncAuth);
+    }, []);
 
     const closeMenu = () => setIsMenuOpen(false);
 
@@ -70,7 +88,13 @@ function Navbar({ isLoggedIn = false }) {
                         {isLoggedIn ? (
                             <>
                                 <Link to="/my-donations" className={`${styles.myDonations} ${isActive('/my-donations') ? styles.activeAction : ''}`} onClick={closeMenu}>My Donations</Link>
-                                <Link to="/profile" className={`${styles.profile} ${isActive('/profile') ? styles.activeProfile : ''}`} onClick={closeMenu} aria-label="Open profile"><img src="https://res.cloudinary.com/dkgeren05/image/upload/v1789876344/default-donation-website-pic_rymjog.png" alt="Profile Picture" /></Link>
+                                <Link to="/profile" className={`${styles.profile} ${isActive('/profile') ? styles.activeProfile : ''}`} onClick={closeMenu} aria-label="Open profile">
+                                    {profileImage ? (
+                                        <img src={profileImage} alt="Profile Picture" />
+                                    ) : (
+                                        <span className={styles.profileFallback}>{profileInitials}</span>
+                                    )}
+                                </Link>
                             </>
                         ) : (
                             <>
