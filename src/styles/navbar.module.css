@@ -1,0 +1,353 @@
+.navbar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid #e3ece8;
+    box-shadow: 0 8px 24px rgba(16, 72, 52, 0.06);
+    backdrop-filter: blur(14px);
+}
+
+.container {
+    width: min(100% - 48px, 1400px);
+    min-height: 72px;
+    margin: 0 auto;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.logoImage {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border: 1px solid #d7eee2;
+    border-radius: 50%;
+    background: #eefaf4;
+}
+
+.logoImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logoText h1 {
+    margin: 0;
+    color: #123b63;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+}
+
+.logoText h1 span {
+    color: #159957;
+}
+
+.logoText p {
+    margin: 2px 0 0;
+    color: #718096;
+    font-size: 10px;
+    letter-spacing: 0.2px;
+}
+
+.navigationArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex: 1;
+    min-width: 0;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 2.2vw, 30px);
+    flex-shrink: 0;
+}
+
+.navLink {
+    position: relative;
+    padding: 10px 0;
+    color: #334155;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.navLink:hover,
+.active {
+    color: #159957;
+}
+
+.active::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    border-radius: 10px;
+    background: #159957;
+}
+
+.rightSide {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.searchForm {
+    width: clamp(150px, 14vw, 220px);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 8px 0 12px;
+    border: 1px solid #dce8e1;
+    border-radius: 12px;
+    background: #f7fbf8;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.searchForm:focus-within {
+    border-color: #159957;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(21, 153, 87, 0.12);
+}
+
+.searchIcon {
+    color: #668277;
+    font-size: 21px;
+    line-height: 1;
+    transform: rotate(-20deg);
+}
+
+.searchForm input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    color: #123b63;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+}
+
+.searchForm input::placeholder {
+    color: #789087;
+}
+
+.searchForm button {
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 8px;
+    color: #117a45;
+    background: #e2f5e9;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.searchForm button:hover {
+    color: #ffffff;
+    background: #159957;
+}
+
+.loginButton,
+.registerButton,
+.donateButton {
+    padding: 9px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.loginButton {
+    border: 1px solid #159957;
+    color: #159957;
+    background: #ffffff;
+}
+
+.loginButton:hover {
+    background: #eefaf4;
+}
+
+.registerButton,
+.donateButton {
+    color: #ffffff;
+    background: #159957;
+}
+
+.registerButton:hover,
+.donateButton:hover {
+    color: #ffffff;
+    background: #117a45;
+    transform: translateY(-1px);
+}
+
+.myDonations {
+    padding: 8px 10px;
+    color: #123b63;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.myDonations:hover {
+    color: #159957;
+}
+
+.activeAction {
+    color: #159957;
+    border-bottom: 2px solid #159957;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #117a45;
+    background: #eefaf4;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.activeProfile {
+    box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.18);
+}
+
+.activeDonate {
+    box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.2);
+}
+
+.menuToggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    margin-left: auto;
+    padding: 10px;
+    border: 1px solid #dce8e1;
+    border-radius: 10px;
+    background: #f7fbf8;
+    cursor: pointer;
+}
+
+.menuToggle span {
+    display: block;
+    height: 2px;
+    margin: 4px 0;
+    border-radius: 2px;
+    background: #123b63;
+    transition: transform 0.2s ease;
+}
+
+@media (max-width: 1120px) {
+    .container { gap: 18px; }
+    .navigationArea { gap: 14px; }
+    .myDonations { display: none; }
+}
+
+@media (max-width: 860px) {
+    .container {
+        width: min(100% - 32px, 720px);
+        min-height: 68px;
+        padding: 10px 0;
+        flex-wrap: wrap;
+    }
+
+    .menuToggle { display: block; }
+
+    .navigationArea {
+        display: none;
+        flex-basis: 100%;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 18px;
+        padding: 18px 0 4px;
+        border-top: 1px solid #e3ece8;
+        animation: revealMenu 0.25s ease both;
+    }
+
+    .menuOpen { display: flex; }
+
+    .navLinks {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .navLink { padding: 10px 4px; }
+    .active::after { right: auto; width: 28px; }
+
+    .rightSide {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .searchForm {
+        grid-column: 1 / -1;
+        width: auto;
+    }
+
+    .loginButton,
+    .registerButton,
+    .donateButton { text-align: center; }
+
+    .profile { justify-self: start; }
+}
+
+@media (max-width: 420px) {
+    .container { width: min(100% - 24px, 380px); }
+    .logoImage { width: 42px; height: 42px; }
+    .logoText h1 { font-size: 18px; }
+    .logoText p { font-size: 9px; }
+}
+
+@keyframes revealMenu {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navigationArea,
+    .searchForm,
+    .searchForm button,
+    .menuToggle span {
+        animation: none;
+        transition: none;
+    }
+}
