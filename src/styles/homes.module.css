@@ -117,3 +117,136 @@
         flex-wrap: wrap;
     }
 }
+
+.ourUsers {
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid #e9f6fd;
+    border-radius: 12px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e9f6fd;
+    box-sizing: border-box;
+}
+
+.users {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    color: #123b63;
+    font-weight: 700;
+}
+
+.user {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    margin-top: 0;
+    border-left: 2px solid #a4dfec;
+}
+
+.user:first-child {
+    border-left: none;
+}
+
+.user:last-child {
+    border-right: none;
+}
+
+.user h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 23px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.user h3 i {
+    margin-left: 8px;
+    padding: 0;
+}
+
+.user h3 span {
+    display: block;
+    margin-top: 5px;
+    color: #159957 !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .ourUsers {
+        padding: 15px 10px;
+    }
+
+    .user {
+        padding: 0 10px;
+    }
+
+    .user h3 {
+        font-size: 19px;
+    }
+
+    .user h3 span {
+        font-size: 14px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+    .ourUsers {
+        min-height: auto;
+        padding: 15px 5px;
+    }
+
+    .users {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px 0;
+    }
+
+    .user {
+        padding: 10px;
+        margin: 0;
+        border-left: none;
+        border-right: 2px solid #a4dfec;
+    }
+
+    .user:nth-child(2n) {
+        border-right: none;
+    }
+
+    .user h3 {
+        font-size: 18px;
+    }
+
+    .user h3 i {
+        margin-left: 5px;
+    }
+
+    .user h3 span {
+        font-size: 13px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 350px) {
+    .users {
+        grid-template-columns: 1fr;
+    }
+
+    .user {
+        border-right: none;
+        border-bottom: 2px solid #a4dfec;
+    }
+
+    .user:last-child {
+        border-bottom: none;
+    }
+}
