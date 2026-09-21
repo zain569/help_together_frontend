@@ -14,6 +14,8 @@ function Register() {
         email: '',
         password: ''
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleProfileImage = (event) => {
@@ -27,15 +29,19 @@ function Register() {
     async function handleRegister(e) {
         e.preventDefault();
 
+        setLoading(true);
         try {
             const data = await RegisterUserApi(registerUserData, image);
 
+            setError(data.message);
             if (data?.user) {
                 saveAuthSession(data);
                 navigate('/');
             }
+            setLoading(false)
         } catch (err) {
             console.log(err);
+            setLoading(false)
         }
     }
 
@@ -71,7 +77,8 @@ function Register() {
                             <span><strong>Profile picture <em>(optional)</em></strong><small>Choose an image to personalize your profile</small></span>
                             <input id="profile-image" name="profileImage" type="file" accept="image/*" onChange={handleProfileImage} />
                         </label>
-                        <button type="submit" className={styles.submitButton}>Create Account <span aria-hidden="true">→</span></button>
+                        <div style={{ color: 'red', display: error ? 'block' : 'none' }} className={styles.errorMessage}><p>**{error}**</p></div>
+                        <button type="submit" disabled={loading} className={styles.submitButton}>{loading ? 'Registrying...' : 'Create Account'}<span aria-hidden="true">→</span></button>
                     </form>
                     <p className={styles.switchAuth}>Already have an account? <Link to="/login">Log in</Link></p>
                 </div>

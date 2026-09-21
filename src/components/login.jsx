@@ -10,20 +10,27 @@ function Login() {
         email: '',
         password: ''
     });
+    const [loading, setLoading] = useState(false)
+    const [resData, setResData] = useState(null)
     const navigate = useNavigate();
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
 
+        setLoading(true);
         try {
             const data = await LoginUserApi(loginUserData);
+
+            setResData(data.message);
 
             if (data?.token) {
                 saveAuthSession(data);
                 navigate('/');
             }
+            setLoading(false)
         } catch (error) {
             console.error('Login failed:', error);
+            setLoading(false)
         }
     };
 
@@ -74,10 +81,9 @@ function Login() {
                             <button type="button" className={styles.passwordToggle} onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? '◉' : '◌'}</button>
                         </div>
 
-                        <div className={styles.formOptions}>
-                            <a href="#forgot-password">Forgot password?</a>
-                        </div>
-                        <button type="submit" className={styles.submitButton}>Login <span aria-hidden="true">→</span></button>
+                        <div style={{color: 'red', display: resData?'block':'none'}} className={styles.errorMessage}><p>**{resData}**</p></div>
+
+                        <button type="submit" disabled={loading} className={styles.submitButton}>{loading? 'Logining...':'Login'}<span aria-hidden="true">→</span></button>
                     </form>
                     <p className={styles.switchAuth}>Don&apos;t have an account? <Link to="/register">Register now</Link></p>
                 </div>
