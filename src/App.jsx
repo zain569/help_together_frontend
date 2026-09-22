@@ -24,6 +24,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/service-gifts/:id" element="ServiceGiftDetails" />"
       </Routes>
     </>
   )
