@@ -13,7 +13,7 @@ function HomePage() {
         OurUsers()
             .then((data) => setUsers(data))
             .catch((error) => console.error('Users fetch failed:', error));
-        
+
         ServiceGifts()
             .then((data) => setGifts(data))
             .catch((error) => console.error('Gifts fetch failed:', error));
@@ -76,11 +76,44 @@ function HomePage() {
                                 <h3>{gift.name}</h3>
                                 <p className={styles.giftDescription}>{gift.description}</p>
                                 <p className={styles.giftCost}><i>Cost:</i><span> {gift.price}</span></p>
-                                <button onClick={()=> {navigate(`/service-gifts/${gift.id}`)}}>🎁 Give Gift</button>
+                                <button onClick={() => { navigate(`/service-gifts/${gift.id}`) }}>🎁 Give Gift</button>
                             </div>
                         </div>
                     ))}
-                    
+
+                </div>
+            </section>
+
+            {/*Make a Reviews section*/}
+
+            <section className={styles.reeviews}>
+                <div className={styles.reviewUpContainer}>
+                    <p className={styles.reviewUpBadge}>🌟 What Peoples Say</p>
+                    <h3 className={styles.reviewUpTitle}>Reviews From Our Community</h3>
+                    <p className={styles.reviewUpPara}>Real stories. Real impact. See what our kind-hearted supporters
+                        have to say about their experience with HelpTogether.
+                    </p>
+                    <button className={styles.reviewButton}>Add Your Review →</button>
+                </div>
+                <div className={styles.reviewDownContainer}>
+                    <div className={styles.reviesUserInformation}>
+                        <div className={styles.reviewUserImg}>
+                            <img src="favicon.png" alt="image" />
+                        </div>
+                        <div className={styles.reviewUserInfo}>
+                            <h4 className={styles.reviewerUserName}>Ayesha Khan</h4>
+                            <p>⭐⭐⭐⭐⭐</p>
+                        </div>
+                    </div>
+                    <div className={styles.UserReview}>
+                        <p>I donated to a clean water campaign and it
+                            feels amazing to see the difference it made.
+                            HelpTogether is doing great work!
+                        </p>
+                    </div>
+                    <div className={styles.reviewAddedDate}>
+                        <p>Sep 10, 2026</p>
+                    </div>
                 </div>
             </section>
         </>

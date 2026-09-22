@@ -6,6 +6,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import AuthProfileApi from "./apis/authProfile.api";
 import { readAuthSession, saveAuthSession } from "./utils/authSession";
+import Footer from "./components/footer";
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/service-gifts/:id" element="ServiceGiftDetails" />"
       </Routes>
+      <Footer />
     </>
   )
 }

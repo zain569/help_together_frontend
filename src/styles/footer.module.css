@@ -1,0 +1,238 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #0a2b46;
+    color: #ffffff;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =========================
+   Footer Main Content
+========================= */
+
+.footerContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* =========================
+   Logo Section
+========================= */
+
+.footerlogoContent {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.footerLogo {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.footerLogo img {
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.footerLogo h1 {
+    color: #f1f3f5;
+    font-weight: 800;
+    height: fit-content;
+    margin: 3px 0 0 10px;
+    line-height: 1.2;
+}
+
+.footerLogo h1 span {
+    color: #45c46b;
+}
+
+/* Fixed: p is not inside h1 */
+.footerLogo p {
+    flex-basis: 100%;
+    margin: 5px 0 0 0;
+    font-weight: 300;
+    font-size: small;
+}
+
+.footerNewLine {
+    flex-basis: 100%;
+}
+
+/* =========================
+   Description
+========================= */
+
+.footerdescription {
+    width: 100%;
+    max-width: 350px;
+}
+
+.footerdescription p {
+    margin: 15px 0 0;
+    font-size: large;
+    font-weight: 300;
+    font-family: "Times New Roman", Times, serif;
+    line-height: 1.5;
+}
+
+/* =========================
+   Footer Lists
+========================= */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 11px 0;
+    position: relative;
+}
+
+/* =========================
+   List Hover Effect
+========================= */
+
+ul li::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: -2px;
+    left: 0;
+    background-color: #ffffff;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s ease;
+}
+
+ul li:hover::after {
+    transform: scaleX(1);
+}
+
+/* =========================
+   Copyright
+========================= */
+
+.footerCopyright {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 15px 20px;
+    border-top: 2px solid #ffffff;
+    box-sizing: border-box;
+}
+
+
+/* =================================
+   Tablet
+================================= */
+
+@media (max-width: 900px) {
+
+    .footerContent {
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .footerlogoContent {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .quickLinks,
+    .support,
+    .contactus {
+        flex: 1 1 180px;
+        min-width: 150px;
+    }
+}
+
+
+/* =================================
+   Mobile
+================================= */
+
+@media (max-width: 600px) {
+
+    .footerContent {
+        flex-direction: column;
+        padding: 20px;
+        gap: 25px;
+    }
+
+    .footerlogoContent {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .quickLinks,
+    .support,
+    .contactus {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .footerdescription {
+        max-width: 100%;
+    }
+
+    .footerCopyright {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 15px;
+    }
+}
+
+
+/* =================================
+   Small Phones
+================================= */
+
+@media (max-width: 400px) {
+
+    .footerContent {
+        padding: 15px;
+    }
+
+    .footerLogo img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .footerLogo h1 {
+        font-size: 24px;
+        margin-left: 8px;
+    }
+
+    .footerLogo p {
+        font-size: 12px;
+    }
+
+    .footerdescription p {
+        font-size: 16px;
+    }
+}
