@@ -1,0 +1,215 @@
+.page {
+    width: 100%;
+    min-height: 100vh;
+    color: #17324d;
+    background: #ffffff;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    padding: 70px 8%;
+    background: linear-gradient(110deg, #edf9fd, #ffffff);
+}
+
+.hero > div {
+    max-width: 800px;
+}
+
+.badge {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    color: #07975d;
+    background: #e4f8ef;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.hero h1 {
+    margin: 0 0 18px;
+    color: #0a2b46;
+    font-size: clamp(40px, 5vw, 60px);
+}
+
+.hero h1 span {
+    color: #0fa968;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 0 0 15px;
+    color: #526b7e;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.hero small {
+    color: #738391;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    max-width: 1250px;
+    margin: auto;
+    padding: 70px 30px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 60px;
+}
+
+.sidebar {
+    height: fit-content;
+    padding: 25px;
+    position: sticky;
+    top: 25px;
+    border: 1px solid #e2edf2;
+    border-radius: 12px;
+    background: #f7fbfd;
+}
+
+.sidebar h3 {
+    margin: 0 0 18px;
+    color: #0a2b46;
+    font-size: 18px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 9px 0;
+    color: #557084;
+    font-size: 14px;
+    text-decoration: none;
+    line-height: 1.5;
+}
+
+.sidebar a:hover {
+    color: #0fa968;
+}
+
+.policy section {
+    margin-bottom: 55px;
+    scroll-margin-top: 30px;
+}
+
+.policy section > span {
+    color: #0fa968;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.policy h2 {
+    margin: 8px 0 15px;
+    color: #0a2b46;
+    font-size: 28px;
+}
+
+.policy p {
+    margin: 0 0 15px;
+    color: #5d7283;
+    line-height: 1.9;
+}
+
+.policy ul {
+    margin: 10px 0 0;
+    padding-left: 22px;
+    color: #5d7283;
+}
+
+.policy li {
+    margin-bottom: 9px;
+    line-height: 1.7;
+}
+
+.notice {
+    margin-top: 25px;
+    padding: 20px 22px;
+    border-left: 4px solid #0fa968;
+    border-radius: 8px;
+    background: #eaf8f2;
+}
+
+.notice strong {
+    color: #0a2b46;
+}
+
+.notice p {
+    margin: 8px 0 0;
+}
+
+.contactBox {
+    padding: 25px;
+    border-radius: 12px;
+    background: #f1faff;
+}
+
+.contactBox strong {
+    color: #0a2b46;
+    font-size: 19px;
+}
+
+.contactBox p {
+    margin: 8px 0 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+    .hero {
+        padding: 60px 6%;
+    }
+
+    .content {
+        padding: 55px 6%;
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .sidebar a {
+        display: inline-block;
+        margin-right: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 50px 20px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .content {
+        padding: 45px 20px;
+    }
+
+    .sidebar {
+        padding: 20px;
+    }
+
+    .sidebar a {
+        display: block;
+        margin: 0;
+    }
+
+    .policy section {
+        margin-bottom: 45px;
+    }
+
+    .policy h2 {
+        font-size: 24px;
+    }
+}

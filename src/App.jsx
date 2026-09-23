@@ -7,6 +7,10 @@ import Register from "./components/register";
 import AuthProfileApi from "./apis/authProfile.api";
 import { readAuthSession, saveAuthSession } from "./utils/authSession";
 import Footer from "./components/footer";
+import AboutUs from "./components/aboutUs";
+import HowItWorks from "./components/howitwork";
+import PrivacyPolicy from "./components/privacypolicy";
+import TermsConditions from "./components/termCondition";
 
 function App() {
   useEffect(() => {
@@ -25,6 +29,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/how-it-work" element={<HowItWorks />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/term-condition" element={<TermsConditions />} />
         <Route path="/service-gifts/:id" element="ServiceGiftDetails" />"
       </Routes>
       <Footer />

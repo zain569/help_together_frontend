@@ -106,6 +106,7 @@ ul li {
     cursor: pointer;
     margin: 11px 0;
     position: relative;
+    text-align: center;
 }
 
 /* =========================
