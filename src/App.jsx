@@ -11,6 +11,7 @@ import AboutUs from "./components/aboutUs";
 import HowItWorks from "./components/howitwork";
 import PrivacyPolicy from "./components/privacypolicy";
 import TermsConditions from "./components/termCondition";
+import Campaigns from "./components/campaigns";
 
 function App() {
   useEffect(() => {
@@ -33,7 +34,10 @@ function App() {
         <Route path="/how-it-work" element={<HowItWorks />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/term-condition" element={<TermsConditions />} />
-        <Route path="/service-gifts/:id" element="ServiceGiftDetails" />"
+        <Route path="/service-gifts/:id" element="ServiceGiftDetails" />
+        <Route path="/campaigns" element={<Campaigns />} />
+        <Route path="/donate/:id" element="This is donation Page" />
+        <Route path="/campaigns/:id" element="Campaign Details" />
       </Routes>
       <Footer />
     </>

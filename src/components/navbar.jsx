@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/navbar.module.css';
 import { readAuthSession } from '../utils/authSession';
+import SearchCampaign from '../apis/campaignsAPI/searchCampaign.get';
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [auth, setAuth] = useState(readAuthSession());
+    const [resultData, setResultData] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
@@ -34,10 +37,33 @@ function Navbar() {
         event.preventDefault();
         const query = searchQuery.trim();
 
-        if (query) {
-            navigate(`/campaigns?search=${encodeURIComponent(query)}`);
-            closeMenu();
+        if (!query) {
+            setResultData([]);
+            return;
         }
+
+        setIsSearching(true);
+        SearchCampaign(query)
+            .then((data) => {
+                const campaigns = Array.isArray(data)
+                    ? data
+                    : data?.campaigns || data?.results || [];
+                setResultData(Array.isArray(campaigns) ? campaigns : []);
+            })
+            .catch((error) => {
+                console.error('Search failed:', error);
+                setResultData([]);
+            })
+            .finally(() => setIsSearching(false));
+    };
+
+    const openCampaign = (campaign) => {
+        const campaignId = campaign.id || campaign._id;
+        if (!campaignId) return;
+
+        navigate(`/campaigns/${campaignId}`);
+        setResultData([]);
+        closeMenu();
     };
 
     return (
@@ -82,7 +108,34 @@ function Navbar() {
                                 placeholder="Search campaigns"
                                 aria-label="Search campaigns"
                             />
-                            <button type="submit">Search</button>
+                            <button type="submit" disabled={isSearching}>
+                                {isSearching ? 'Searching...' : 'Search'}
+                            </button>
+                            {(isSearching || resultData.length > 0) && (
+                                <div className={styles.searchResults} role="listbox" aria-label="Campaign search results">
+                                    {isSearching ? (
+                                        <p className={styles.searchStatus}>Searching campaigns...</p>
+                                    ) : (
+                                        resultData.map((campaign, index) => {
+                                            const campaignTitle = campaign.title || campaign.name || 'Untitled campaign';
+                                            const campaignId = campaign.id || campaign._id;
+
+                                            return (
+                                                <button
+                                                    className={styles.searchResult}
+                                                    key={campaignId || `${campaignTitle}-${index}`}
+                                                    type="button"
+                                                    role="option"
+                                                    onClick={() => openCampaign(campaign)}
+                                                    disabled={!campaignId}
+                                                >
+                                                    {campaignTitle}
+                                                </button>
+                                            );
+                                        })
+                                    )}
+                                </div>
+                            )}
                         </form>
 
                         {isLoggedIn ? (
