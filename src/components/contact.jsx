@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/contact.module.css';
 import { readAuthSession } from '../utils/authSession';
+import SendMessage from '../apis/contact/contact.post';
 
 function getContactUser() {
     const session = readAuthSession();
@@ -31,13 +32,33 @@ function Contact() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+        const isValidUserId = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(formData.userId);
+
+        if (!formData.name.trim() || !formData.subject.trim() || !formData.message.trim()) {
+            setFormStatus('Please fill in all fields.');
+            return;
+        }
+
+        if (!isValidEmail || !isValidUserId) {
+            setFormStatus('Your account information is invalid. Please log in again.');
+            return;
+        }
 
         if (!isLoggedIn) {
             setFormStatus('Please log in before sending a message.');
             return;
         }
 
-        setFormStatus('Your message is ready to send.');
+        SendMessage(formData)
+            .then(() => {
+                setFormStatus('Message submitted successfully.');
+                setFormData({ ...getContactUser(), subject: '', message: '' });
+            })
+            .catch((error) => {
+                console.error('Error sending message:', error);
+                setFormStatus('Failed to send message. Please try again.');
+            });
     };
 
     return (

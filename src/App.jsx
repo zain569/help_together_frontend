@@ -14,6 +14,8 @@ import TermsConditions from "./components/termCondition";
 import Campaigns from "./components/campaigns";
 import ServiceAndGifts from "./components/serviceGifts";
 import Contact from "./components/contact";
+import CampaignsGetOne from "./components/campaignsGetOne";
+import MyProfile from "./components/myProfile";
 
 function App() {
   useEffect(() => {
@@ -39,9 +41,10 @@ function App() {
         <Route path="/service-gifts/:id" element="ServiceGiftDetails" />
         <Route path="/campaigns" element={<Campaigns />} />
         <Route path="/donate/:id" element="This is donation Page" />
-        <Route path="/campaigns/:id" element="Campaign Details" />
+        <Route path="/campaigns/:id" element={<CampaignsGetOne />} />
         <Route path="/service-gifts" element={<ServiceAndGifts />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile/:id" element={<MyProfile />} />
       </Routes>
       <Footer />
     </>

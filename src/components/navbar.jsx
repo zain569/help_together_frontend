@@ -14,6 +14,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     const isLoggedIn = Boolean(auth?.token || auth?.isUser);
+    const profileUserId = auth?.user?.id || localStorage.getItem('userId') || '';
     const profileImage = auth?.user?.profileimage || auth?.user?.imageurl || '';
     const profileName = auth?.user?.displayName || auth?.user?.firstname || 'User';
     const profileInitials = profileName
@@ -141,7 +142,12 @@ function Navbar() {
                         {isLoggedIn ? (
                             <>
                                 <Link to="/my-donations" className={`${styles.myDonations} ${isActive('/my-donations') ? styles.activeAction : ''}`} onClick={closeMenu}>My Donations</Link>
-                                <Link to="/profile" className={`${styles.profile} ${isActive('/profile') ? styles.activeProfile : ''}`} onClick={closeMenu} aria-label="Open profile">
+                                <Link
+                                    to={profileUserId ? `/profile/${profileUserId}` : '/login'}
+                                    className={`${styles.profile} ${isActive('/profile') ? styles.activeProfile : ''}`}
+                                    onClick={closeMenu}
+                                    aria-label="Open profile"
+                                >
                                     {profileImage ? (
                                         <img src={profileImage} alt="Profile Picture" />
                                     ) : (

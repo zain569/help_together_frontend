@@ -1,0 +1,68 @@
+.page {
+	min-height: 70vh;
+	padding: 28px 7% 70px;
+	background: linear-gradient(180deg, #edfaff 0%, #ffffff 42%);
+	color: #123b63;
+}
+
+.detailsCard {
+	display: grid;
+	grid-template-columns: minmax(280px, 1.1fr) minmax(280px, 0.95fr) minmax(255px, 0.75fr);
+	gap: 26px;
+	align-items: center;
+	max-width: 1140px;
+	margin: 0 auto;
+	padding: 24px;
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.7);
+}
+
+.imagePanel { position: relative; height: 300px; overflow: hidden; border-radius: 12px; }
+.imagePanel img { width: 100%; height: 100%; object-fit: cover; }
+.supporterBadge { position: absolute; left: 14px; bottom: 14px; padding: 9px 13px; border-radius: 9px; background: rgba(10, 43, 70, 0.88); color: white; font-size: 12px; }
+.badge { display: inline-block; padding: 6px 11px; border-radius: 16px; background: #dcf8ee; color: #159957; font-size: 11px; font-weight: 800; }
+.campaignInfo h1 { margin: 13px 0 12px; font-size: clamp(30px, 4vw, 43px); line-height: 1.05; }
+.description { color: #52708d; font-size: 14px; line-height: 1.65; }
+.metaGrid { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 23px; }
+.metaGrid > div { display: flex; align-items: center; gap: 8px; color: #159957; }
+.metaGrid > div > span { font-size: 20px; }
+.metaGrid p { display: flex; flex-direction: column; margin: 0; color: #607b91; font-size: 11px; }
+.metaGrid b { color: #36536f; font-size: 10px; }
+.progressPanel { padding: 20px 16px; border-radius: 12px; background: #ffffff; box-shadow: 0 8px 22px rgba(18, 59, 99, 0.08); }
+.amountRow, .moneyRow { display: flex; justify-content: space-between; align-items: center; }
+.amountRow strong { color: #123b63; font-size: 22px; }
+.amountRow b { color: #08a36b; font-size: 20px; }
+.progressPanel > p { margin: 5px 0 13px; color: #607b91; font-size: 11px; }
+.progressTrack, .smallTrack { height: 9px; overflow: hidden; border-radius: 10px; background: #e3eef5; }
+.progressTrack span, .smallTrack span { display: block; height: 100%; border-radius: inherit; background: #08a36b; }
+.moneyRow { margin: 18px 0; color: #607b91; font-size: 12px; }
+.moneyRow strong { color: #123b63; }
+.progressPanel button { width: 100%; padding: 11px; border: 1px solid #08a36b; border-radius: 9px; background: #08a36b; color: white; cursor: pointer; font-weight: 800; }
+.progressPanel button span { margin-left: 8px; }
+.progressPanel .shareButton { margin-top: 9px; background: white; color: #159957; }
+.relatedSection { max-width: 1140px; margin: 52px auto 0; }
+.sectionHeading { margin-bottom: 20px; }
+.sectionHeading h2 { margin: 10px 0 5px; color: #123b63; font-size: 29px; }
+.sectionHeading p { margin: 0; color: #607b91; font-size: 14px; }
+.relatedGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.relatedCard { overflow: hidden; border: 1px solid #e0eef3; border-radius: 11px; background: white; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
+.relatedCard:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(18, 59, 99, .1); }
+.relatedCard > img { width: 100%; height: 150px; object-fit: cover; }
+.relatedCard > div { padding: 13px; }
+.relatedCard h3 { margin: 0 0 7px; color: #123b63; font-size: 17px; }
+.relatedCard p { display: -webkit-box; overflow: hidden; margin: 0 0 13px; color: #607b91; font-size: 12px; line-height: 1.45; -webkit-box-orient: vertical; }
+.smallTrack { height: 6px; margin-bottom: 7px; }
+.relatedCard small { color: #159957; font-weight: 700; }
+.state { min-height: 55vh; display: grid; place-items: center; color: #52708d; }
+
+@media (max-width: 950px) {
+	.detailsCard { grid-template-columns: 1fr 1fr; }
+	.imagePanel { grid-row: span 2; height: 360px; }
+}
+
+@media (max-width: 650px) {
+	.page { padding: 18px 16px 50px; }
+	.detailsCard { display: flex; flex-direction: column; align-items: stretch; padding: 12px; }
+	.imagePanel { height: 260px; }
+	.relatedGrid { grid-template-columns: 1fr; }
+}
