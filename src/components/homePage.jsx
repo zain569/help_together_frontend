@@ -127,10 +127,10 @@ function HomePage() {
                     <span className={styles.serviceBadge}>🎁 Our Service Gifts</span>
                     <h3 className={styles.serviceTitle}>Service Gifts</h3>
                     <p className={styles.servicePara}>Support meaningfull causes with our special service gifts.<span>Each gift helps someone in need and spreads kindness.</span></p>
-                    <button className={styles.serviceButton}>View All Service Gifts</button>
+                    <button className={styles.serviceButton} onClick={() => navigate('/service-gifts')}>View All Service Gifts</button>
                 </div>
                 <div className={styles.giftsContainer}>
-                    {gifts.map((gift) => (
+                    {gifts.slice(0, 3).map((gift) => (
                         <div className={styles.giftContent} key={gift._id || gift.id || gift.name}>
                             <div className={styles.imgContainer}>
                                 <img src={gift.imageUrl} alt={gift.name} />

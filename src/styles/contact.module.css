@@ -1,0 +1,245 @@
+.contactPage {
+    overflow: hidden;
+    background: #f7fcfd;
+    color: #123b63;
+}
+
+.hero {
+    min-height: 330px;
+    display: flex;
+    align-items: center;
+    padding: 45px 9%;
+    box-sizing: border-box;
+    background: url('/contactpage.hero.section.png') center / cover no-repeat;
+}
+
+.heroContent {
+    max-width: 560px;
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 7px 13px;
+    border-radius: 18px;
+    background: #dff8f0;
+    color: #159957;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.hero h1 {
+    margin: 16px 0 8px;
+    font-size: clamp(42px, 5vw, 62px);
+    line-height: 1.05;
+}
+
+.hero h1 span {
+    color: #159957;
+}
+
+.hero p {
+    margin: 0;
+    color: #36536f;
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+.contactContent {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.85fr) minmax(420px, 1.15fr);
+    gap: 70px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 35px 7% 50px;
+}
+
+.connectPanel {
+    padding-top: 10px;
+}
+
+.introBlock,
+.infoItem,
+.formHeading {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.introBlock {
+    margin-bottom: 24px;
+}
+
+.iconCircle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e5f9f7;
+    color: #08a36b;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.connectPanel h2,
+.formHeading h2 {
+    margin: 7px 0 4px;
+    color: #123b63;
+    font-size: 22px;
+}
+
+.connectPanel h3 {
+    margin: 4px 0 4px;
+    color: #123b63;
+    font-size: 14px;
+}
+
+.connectPanel p,
+.formHeading p {
+    margin: 0;
+    color: #52708d;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.introBlock p {
+    max-width: 355px;
+}
+
+.infoItem {
+    margin: 20px 0;
+}
+
+.infoItem .iconCircle {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+    font-size: 19px;
+}
+
+.signature {
+    margin: 24px 0 0 32px !important;
+    color: #159957 !important;
+    font-size: 18px !important;
+    font-style: italic;
+}
+
+.formCard {
+    padding: 25px 28px;
+    border: 1px solid #e4f0f4;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 24px rgba(18, 59, 99, 0.08);
+}
+
+.formHeading {
+    margin-bottom: 20px;
+}
+
+.formCard form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formCard label {
+    margin: 11px 0 6px;
+    color: #123b63;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.formCard input,
+.formCard textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d6edf4;
+    border-radius: 9px;
+    box-sizing: border-box;
+    color: #36536f;
+    font: inherit;
+    outline: none;
+}
+
+.formCard input:focus,
+.formCard textarea:focus {
+    border-color: #159957;
+    box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.1);
+}
+
+.formCard textarea {
+    resize: vertical;
+}
+
+.formCard input[readonly] {
+    background: #f6fbfc;
+}
+
+.formCard form > button:first-of-type {
+    margin-top: 18px;
+    padding: 11px 20px;
+    border: 0;
+    border-radius: 10px;
+    background: #08a36b;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.formStatus {
+    margin: 12px 0 0;
+    color: #c24e43;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.loginPrompt {
+    align-self: center;
+    margin-top: 10px;
+    border: 0;
+    background: transparent;
+    color: #159957;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+@media (max-width: 800px) {
+    .hero {
+        min-height: 430px;
+        padding: 45px 7%;
+        background-position: 65% center;
+    }
+
+    .contactContent {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 35px 7% 45px;
+    }
+}
+
+@media (max-width: 500px) {
+    .hero {
+        min-height: 500px;
+        align-items: flex-start;
+        padding: 42px 22px;
+        background-position: 70% center;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .contactContent {
+        padding: 28px 20px 40px;
+    }
+
+    .formCard {
+        padding: 22px 18px;
+    }
+}
