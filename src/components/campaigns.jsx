@@ -2,18 +2,36 @@ import { useEffect, useState } from 'react'
 import styles from '../styles/campaigns.module.css'
 import GetAllCampaigns from '../apis/campaignsAPI/getallCampigns.get'
 import { useNavigate } from 'react-router-dom'
+import GetAllCauses from '../apis/causes/getAllCauses.get';
+import FilteredCampaigns from '../apis/campaignsAPI/filtersCampaigns.get';
 
 function Campaigns() {
     const [campaigns, setCampaigns] = useState([]);
+    const [causes, setCauses] = useState([]);
     const [page, setPage] = useState(1);
     const [causeId, setCauseId] = useState('');
+    const [zakatEligible, setZakatEligible] = useState(false);
+    const [urgent, setUrgent] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        GetAllCampaigns({ page, causeId })
+        const fetchCampaigns = causeId || zakatEligible || urgent
+            ? FilteredCampaigns({ causeId, zakatEligible, urgent })
+            : GetAllCampaigns({ page });
+
+        fetchCampaigns
             .then((data) => setCampaigns(Array.isArray(data) ? data : data?.campaigns || []))
             .catch((error) => console.error('Campaigns fetch failed:', error))
-    }, [page, causeId])
+    }, [page, causeId, zakatEligible, urgent])
+
+    useEffect(() => {
+        GetAllCauses()
+            .then((data) => {
+                const causeList = Array.isArray(data) ? data : []
+                setCauses(causeList)
+            })
+            .catch((error) => console.error('Causes fetch failed:', error))
+    }, [])
 
     return (
         <>
@@ -41,14 +59,47 @@ function Campaigns() {
                     <p>Choose a cause that matter to you and start making an impact.</p>
 
                     <div className={styles.causesBadges}>
-                        <button className={`${styles.causeBadge} ${causeId === '' ? styles.active : ''}`} type="button" onClick={() => { setCauseId(''); setPage(1) }}>All Causes</button>
-                        <button className={`${styles.causeBadge} ${causeId === 1 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(1); setPage(1) }}>Education</button>
-                        <button className={`${styles.causeBadge} ${causeId === 2 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(2); setPage(1) }}>Food</button>
-                        <button className={`${styles.causeBadge} ${causeId === 3 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(3); setPage(1) }}>Helth</button>
-                        <button className={`${styles.causeBadge} ${causeId === 4 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(4); setPage(1) }}>Shelter</button>
-                        <button className={`${styles.causeBadge} ${causeId === 5 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(5); setPage(1) }}>Clean Water</button>
-                        <button className={`${styles.causeBadge} ${causeId === 4 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(4); setPage(1) }}>Shelter</button>
-                        <button className={`${styles.causeBadge} ${causeId === 6 ? styles.active : ''}`} type="button" onClick={() => { setCauseId(6); setPage(1) }}>Emergency</button>
+                        <button
+                            className={`${styles.causeBadge} ${causeId === '' ? styles.active : ''}`}
+                            type="button"
+                            aria-pressed={causeId === ''}
+                            onClick={() => { setCauseId(''); setPage(1) }}
+                        >
+                            All Causes
+                        </button>
+                        {causes.map((cause) => (
+                            <button
+                                key={cause.id}
+                                className={`${styles.causeBadge} ${causeId === cause.id ? styles.active : ''}`}
+                                type="button"
+                                aria-pressed={causeId === cause.id}
+                                onClick={() => {
+                                    setCauseId(cause.id); setPage(1);
+                                }}
+                            >
+                                <img className={styles.causeImage} src={cause.imageUrl} alt="" />
+                                <span>{cause.name}</span>
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className={styles.campaignFilters} aria-label="Campaign filters">
+                        <label className={styles.filterOption}>
+                            <input
+                                type="checkbox"
+                                checked={zakatEligible}
+                                onChange={(event) => { setZakatEligible(event.target.checked); setPage(1) }}
+                            />
+                            Zakat eligible
+                        </label>
+                        <label className={styles.filterOption}>
+                            <input
+                                type="checkbox"
+                                checked={urgent}
+                                onChange={(event) => { setUrgent(event.target.checked); setPage(1) }}
+                            />
+                            Urgent
+                        </label>
                     </div>
                 </div>
             </section>
@@ -73,7 +124,7 @@ function Campaigns() {
                                         <h2>{campaign.title || campaign.name || 'Support a campaign'}</h2>
                                         <p>{campaign.description || 'Help create a brighter future for people in need.'}</p>
                                         <div className={styles.progressLabels}>
-                                            <span><i style={{color: '#607b91'}}>{campaign.collectedAmount}</i> raised of {campaign.goalAmount}</span>
+                                            <span><i style={{ color: '#607b91' }}>{campaign.collectedAmount}</i> raised of {campaign.goalAmount}</span>
                                             <span>{Math.round(progress)}%</span>
                                         </div>
                                         <div className={styles.progressTrack}>

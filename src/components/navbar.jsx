@@ -118,7 +118,7 @@ function Navbar() {
                                     ) : (
                                         resultData.map((campaign, index) => {
                                             const campaignTitle = campaign.title || campaign.name || 'Untitled campaign';
-                                            const campaignId = campaign.id || campaign._id;
+                                            const campaignId = campaign.id;
 
                                             return (
                                                 <button

@@ -278,9 +278,40 @@
     box-shadow: 0 7px 18px rgba(21, 153, 87, 0.22);
 }
 
+.campaignFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.filterOption {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #123b63;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filterOption input {
+    width: 17px;
+    height: 17px;
+    accent-color: #159957;
+    cursor: pointer;
+}
+
 .causeBadge:focus-visible {
     outline: 3px solid rgba(21, 153, 87, 0.2);
     outline-offset: 3px;
+}
+
+.causeImage {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .campaignsSection {
