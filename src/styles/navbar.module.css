@@ -399,6 +399,16 @@
     .registerButton,
     .donateButton { text-align: center; }
 
+    .myDonations {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        border: 1px solid #dce8e1;
+        border-radius: 8px;
+        background: #f7fbf8;
+    }
+
     .profile { justify-self: start; }
 }
 

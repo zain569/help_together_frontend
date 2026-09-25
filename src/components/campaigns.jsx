@@ -130,7 +130,7 @@ function Campaigns() {
                                         <div className={styles.progressTrack}>
                                             <span style={{ width: `${progress}%` }} />
                                         </div>
-                                        <button onClick={() => { navigate(`/donate/${campaign.id}`) }} className={styles.donateButton}>Donate Now</button>
+                                        <button onClick={() => { navigate(`/donate/campaign/${campaign.id}`) }} className={styles.donateButton}>Donate Now</button>
                                     </div>
                                 </article>
                             )

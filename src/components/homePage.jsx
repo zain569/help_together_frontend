@@ -139,7 +139,7 @@ function HomePage() {
                                 <h3>{gift.name}</h3>
                                 <p className={styles.giftDescription}>{gift.description}</p>
                                 <p className={styles.giftCost}><i>Cost:</i><span> {gift.price}</span></p>
-                                <button onClick={() => { navigate(`/service-gifts/${gift.id}`) }}>🎁 Give Gift</button>
+                                <button onClick={() => { navigate(`/donate/service/${gift.id}`) }}>🎁 Give Gift</button>
                             </div>
                         </div>
                     ))}

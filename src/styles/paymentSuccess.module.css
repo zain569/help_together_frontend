@@ -1,0 +1,161 @@
+.successPage {
+    width: 100%;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #f3fcf8 0%, #f4fbff 100%);
+}
+
+.successCard {
+    width: 100%;
+    max-width: 650px;
+    padding: 50px 45px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #dcefe8;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(18, 59, 99, 0.09);
+}
+
+.successIcon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #e4f8ef;
+    border: 7px solid #c9f0dd;
+}
+
+.successIcon span {
+    color: #159957;
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.successCard h1 {
+    margin: 0 0 15px;
+    color: #123b63;
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.mainText {
+    margin: 0 0 8px;
+    color: #159957;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.subText {
+    max-width: 500px;
+    margin: 0 auto 25px;
+    color: #5b7187;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.thankYouBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto 30px;
+    padding: 17px 20px;
+    box-sizing: border-box;
+    text-align: left;
+    background-color: #f0faf6;
+    border: 1px solid #d8eee3;
+    border-radius: 13px;
+}
+
+.thankYouBox span {
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.thankYouBox p {
+    margin: 0;
+    color: #36536f;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.homeButton {
+    width: 100%;
+    max-width: 260px;
+    padding: 13px 22px;
+    border: 2px solid #159957;
+    border-radius: 28px;
+    background-color: #159957;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.homeButton:hover {
+    background-color: #117d48;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .successPage {
+        min-height: 70vh;
+        padding: 40px 18px;
+    }
+
+    .successCard {
+        padding: 40px 25px;
+        border-radius: 20px;
+    }
+
+    .successIcon {
+        width: 75px;
+        height: 75px;
+    }
+
+    .successIcon span {
+        font-size: 40px;
+    }
+
+    .successCard h1 {
+        font-size: 30px;
+    }
+
+    .mainText {
+        font-size: 17px;
+    }
+
+    .subText {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .successPage {
+        padding: 30px 15px;
+    }
+
+    .successCard {
+        padding: 35px 18px;
+    }
+
+    .successCard h1 {
+        font-size: 26px;
+    }
+
+    .thankYouBox {
+        padding: 14px;
+    }
+
+    .homeButton {
+        max-width: 100%;
+    }
+}

@@ -16,6 +16,10 @@ import ServiceAndGifts from "./components/serviceGifts";
 import Contact from "./components/contact";
 import CampaignsGetOne from "./components/campaignsGetOne";
 import MyProfile from "./components/myProfile";
+import GetMyDonations from "./components/getMyDonations";
+import MakeaDonation from "./components/makeaDonation";
+import PaymentSuccess from "./components/paymentSuccess";
+import PaymentFailed from "./components/paymentfai";
 
 function App() {
   useEffect(() => {
@@ -40,11 +44,14 @@ function App() {
         <Route path="/term-condition" element={<TermsConditions />} />
         <Route path="/service-gifts/:id" element="ServiceGiftDetails" />
         <Route path="/campaigns" element={<Campaigns />} />
-        <Route path="/donate/:id" element="This is donation Page" />
+        <Route path="/donate/:type/:id" element={<MakeaDonation />} />
         <Route path="/campaigns/:id" element={<CampaignsGetOne />} />
         <Route path="/service-gifts" element={<ServiceAndGifts />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/profile/:id" element={<MyProfile />} />
+        <Route path="/my-donations" element={<GetMyDonations />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-cancel" element={<PaymentFailed />} />
       </Routes>
       <Footer />
     </>

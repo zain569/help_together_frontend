@@ -95,7 +95,7 @@ function CampaignsGetOne() {
 					<p>raised of PKR {amount(goal)}</p>
 					<div className={styles.progressTrack} aria-label={`${Math.round(progress)} percent raised`}><span style={{ width: `${progress}%` }} /></div>
 					<div className={styles.moneyRow}><span>Money left</span><strong>PKR {amount(remaining)}</strong></div>
-					<button type="button" onClick={() => navigate(`/donate/${campaignId}`)}>♥ Donate Now <span>→</span></button>
+					<button type="button" onClick={() => navigate(`/donate/campaign/${campaignId}`)}>♥ Donate Now <span>→</span></button>
 					<button type="button" className={styles.shareButton}>↗ Share Campaign</button>
 				</div>
 			</section>
