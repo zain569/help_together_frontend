@@ -76,11 +76,15 @@ export function saveAuthSession(payload = {}) {
 }
 
 export function clearAuthSession() {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userProfileImage');
-    localStorage.removeItem('userName');
+    localStorage.clear();
+    sessionStorage.clear();
+
+    document.cookie.split(';').forEach((cookie) => {
+        const cookieName = cookie.split('=')[0].trim();
+        if (cookieName) {
+            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+        }
+    });
+
     window.dispatchEvent(new CustomEvent('auth:change', { detail: null }));
 }

@@ -27,7 +27,6 @@ function Footer() {
                             <li onClick={() => { navigate('/') }}>Home</li>
                             <li onClick={() => { navigate('/about-us') }}>About Us</li>
                             <li onClick={() => { navigate('/campaigns') }}>Campaigns</li>
-                            <li onClick={() => { navigate('/donate') }}>Donate</li>
                             <li onClick={() => { navigate('/contact') }}>Contact</li>
                         </ul>
                     </div>

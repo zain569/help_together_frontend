@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/navbar.module.css';
-import { readAuthSession } from '../utils/authSession';
+import { clearAuthSession, readAuthSession } from '../utils/authSession';
 import SearchCampaign from '../apis/campaignsAPI/searchCampaign.get';
 
 function Navbar() {
@@ -34,6 +34,12 @@ function Navbar() {
 
     const closeMenu = () => setIsMenuOpen(false);
 
+    const handleLogout = () => {
+        clearAuthSession();
+        closeMenu();
+        navigate('/login');
+    };
+
     const handleSearch = (event) => {
         event.preventDefault();
         const query = searchQuery.trim();
@@ -44,6 +50,7 @@ function Navbar() {
         }
 
         setIsSearching(true);
+        setResultData([]);
         SearchCampaign(query)
             .then((data) => {
                 const campaigns = Array.isArray(data)
@@ -109,32 +116,26 @@ function Navbar() {
                                 placeholder="Search campaigns"
                                 aria-label="Search campaigns"
                             />
-                            <button type="submit" disabled={isSearching}>
-                                {isSearching ? 'Searching...' : 'Search'}
-                            </button>
-                            {(isSearching || resultData.length > 0) && (
+                            <button type="submit" disabled={isSearching}>Search</button>
+                            {resultData.length > 0 && (
                                 <div className={styles.searchResults} role="listbox" aria-label="Campaign search results">
-                                    {isSearching ? (
-                                        <p className={styles.searchStatus}>Searching campaigns...</p>
-                                    ) : (
-                                        resultData.map((campaign, index) => {
-                                            const campaignTitle = campaign.title || campaign.name || 'Untitled campaign';
-                                            const campaignId = campaign.id;
+                                    {resultData.map((campaign, index) => {
+                                        const campaignTitle = campaign.title || campaign.name || 'Untitled campaign';
+                                        const campaignId = campaign.id;
 
-                                            return (
-                                                <button
-                                                    className={styles.searchResult}
-                                                    key={campaignId || `${campaignTitle}-${index}`}
-                                                    type="button"
-                                                    role="option"
-                                                    onClick={() => openCampaign(campaign)}
-                                                    disabled={!campaignId}
-                                                >
-                                                    {campaignTitle}
-                                                </button>
-                                            );
-                                        })
-                                    )}
+                                        return (
+                                            <button
+                                                className={styles.searchResult}
+                                                key={campaignId || `${campaignTitle}-${index}`}
+                                                type="button"
+                                                role="option"
+                                                onClick={() => openCampaign(campaign)}
+                                                disabled={!campaignId}
+                                            >
+                                                {campaignTitle}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             )}
                         </form>
@@ -154,6 +155,7 @@ function Navbar() {
                                         <span className={styles.profileFallback}>{profileInitials}</span>
                                     )}
                                 </Link>
+                                <button type="button" className={styles.logoutButton} onClick={handleLogout}>Logout</button>
                             </>
                         ) : (
                             <>
@@ -161,8 +163,6 @@ function Navbar() {
                                 <Link to="/register" className={styles.registerButton} onClick={closeMenu}>Register</Link>
                             </>
                         )}
-
-                        <Link to="/donate" className={`${styles.donateButton} ${isActive('/donate') ? styles.activeDonate : ''}`} onClick={closeMenu}>Donate Now</Link>
                     </div>
                 </div>
             </div>

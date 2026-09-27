@@ -115,11 +115,16 @@ function Campaigns() {
 
                             return (
                                 <article className={styles.campaignCard} key={campaign.id || campaign._id || index}>
-                                    <img
-                                        className={styles.campaignImage}
-                                        src={campaign.image || campaign.imageUrl || campaign.coverImage}
-                                        alt={campaign.title || campaign.name || 'Campaign'}
-                                    />
+                                    <div className={styles.campaignImageContainer}>
+                                        <img
+                                            className={styles.campaignImage}
+                                            src={campaign.image || campaign.imageUrl || campaign.coverImage}
+                                            alt={campaign.title || campaign.name || 'Campaign'}
+                                        />
+                                        {campaign.cause?.name && (
+                                            <span className={styles.causeBanner}>{campaign.cause.name}</span>
+                                        )}
+                                    </div>
                                     <div className={styles.campaignDetails}>
                                         <h2>{campaign.title || campaign.name || 'Support a campaign'}</h2>
                                         <p>{campaign.description || 'Help create a brighter future for people in need.'}</p>

@@ -320,7 +320,7 @@
 }
 
 .campaignsContent {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
 }
 
@@ -338,12 +338,32 @@
     box-shadow: 0 8px 24px rgba(18, 59, 99, 0.08);
 }
 
+.campaignImageContainer {
+    position: relative;
+}
+
 .campaignImage {
     display: block;
     width: 100%;
     height: 180px;
     object-fit: cover;
     background: #e8f2f5;
+}
+
+.causeBanner {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    max-width: calc(100% - 28px);
+    padding: 7px 12px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #159957;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .campaignDetails {

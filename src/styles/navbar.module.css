@@ -317,6 +317,25 @@
     background: linear-gradient(135deg, #eafaf0 0%, #d9f2e5 100%);
 }
 
+.logoutButton {
+    padding: 8px 10px;
+    border: 1px solid #f0caca;
+    border-radius: 8px;
+    color: #b42318;
+    background: #fff7f7;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.logoutButton:hover {
+    color: #ffffff;
+    background: #b42318;
+}
+
 .activeProfile {
     box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.18);
 }
@@ -410,6 +429,8 @@
     }
 
     .profile { justify-self: start; }
+
+    .logoutButton { justify-self: end; }
 }
 
 @media (max-width: 420px) {

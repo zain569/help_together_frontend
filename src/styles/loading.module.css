@@ -1,0 +1,49 @@
+.loadingOverlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.48);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    z-index: 99999;
+}
+
+.loadingContainer {
+    width: 360px;
+    height: 360px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.loadingVideo {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+    .loadingContainer {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+    .loadingContainer {
+        width: 240px;
+        height: 240px;
+    }
+}

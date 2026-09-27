@@ -6,7 +6,6 @@ import Login from "./components/login";
 import Register from "./components/register";
 import AuthProfileApi from "./apis/authProfile.api";
 import { readAuthSession, saveAuthSession } from "./utils/authSession";
-import Footer from "./components/footer";
 import AboutUs from "./components/aboutUs";
 import HowItWorks from "./components/howitwork";
 import PrivacyPolicy from "./components/privacypolicy";
@@ -20,6 +19,10 @@ import GetMyDonations from "./components/getMyDonations";
 import MakeaDonation from "./components/makeaDonation";
 import PaymentSuccess from "./components/paymentSuccess";
 import PaymentFailed from "./components/paymentfai";
+import AdminDashboard from "./components/adminDashboard";
+import Footer from "./components/footer";
+import FAQS from "./components/faqS";
+import GlobalLoading from "./components/GlobalLoading";
 
 function App() {
   useEffect(() => {
@@ -35,6 +38,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -48,12 +52,14 @@ function App() {
         <Route path="/campaigns/:id" element={<CampaignsGetOne />} />
         <Route path="/service-gifts" element={<ServiceAndGifts />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<FAQS />} />
         <Route path="/profile/:id" element={<MyProfile />} />
         <Route path="/my-donations" element={<GetMyDonations />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-cancel" element={<PaymentFailed />} />
       </Routes>
       <Footer />
+      <GlobalLoading />
     </>
   )
 }
