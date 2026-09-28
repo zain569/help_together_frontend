@@ -103,6 +103,33 @@
     background: #159957;
 }
 
+.pageSelect {
+    width: 150px;
+    min-height: 40px;
+    padding: 0 10px;
+    border: 1px solid #dce8e1;
+    border-radius: 8px;
+    color: #334155;
+    background: #ffffff;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.pageSelect:hover,
+.pageSelect:focus-visible {
+    border-color: #159957;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.12);
+}
+
+.pageSelectActive {
+    color: #117a45;
+    border-color: #b7e5c9;
+    background: #f7fbf8;
+}
+
 .rightSide {
     display: flex;
     align-items: center;
@@ -402,6 +429,11 @@
 
     .navLink { padding: 10px 4px; }
     .active::after { right: auto; width: 28px; }
+
+    .pageSelect {
+        width: 100%;
+        min-height: 44px;
+    }
 
     .rightSide {
         display: grid;

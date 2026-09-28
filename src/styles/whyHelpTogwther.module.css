@@ -1,0 +1,203 @@
+.whyPage {
+    width: 100%;
+    background-color: #ffffff;
+    color: #123b63;
+}
+
+.hero {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 20px;
+    text-align: center;
+    background: linear-gradient(135deg,
+            #e9f6fd,
+            #ffffff 55%,
+            #eaf8f0);
+}
+
+.heroContent {
+    max-width: 850px;
+}
+
+.heroContent>span,
+.introBadge,
+.sectionHeading>span,
+.finalContent>span {
+    color: #159957;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.heroContent h1 {
+    margin: 15px 0;
+    font-size: clamp(38px, 6vw, 62px);
+    line-height: 1.1;
+}
+
+.heroContent p {
+    max-width: 700px;
+    margin: auto;
+    color: #617688;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.introSection {
+    max-width: 800px;
+    margin: auto;
+    padding: 90px 25px;
+    text-align: center;
+}
+
+.introSection h2 {
+    margin: 12px 0 22px;
+    font-size: clamp(30px, 4vw, 45px);
+    line-height: 1.2;
+}
+
+.introSection p {
+    color: #687b8c;
+    font-size: 16px;
+    line-height: 1.85;
+}
+
+.reasonsSection {
+    padding: 90px 25px;
+    background-color: #f6fbfd;
+}
+
+.sectionHeading {
+    max-width: 750px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.sectionHeading h2 {
+    margin: 12px 0 0;
+    font-size: clamp(30px, 4vw, 44px);
+}
+
+.reasonsGrid {
+    max-width: 1150px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.reasonCard {
+    padding: 32px 28px;
+    background-color: #ffffff;
+    border: 1px solid #e2edf3;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(18, 59, 99, 0.06);
+    transition: 0.3s ease;
+}
+
+.reasonCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(18, 59, 99, 0.11);
+}
+
+.icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background-color: #e9f6fd;
+    font-size: 27px;
+}
+
+.reasonCard h3 {
+    margin: 0 0 12px;
+    font-size: 21px;
+}
+
+.reasonCard p {
+    margin: 0;
+    color: #687b8c;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.finalSection {
+    padding: 85px 20px;
+    background-color: #123b63;
+    text-align: center;
+}
+
+.finalContent {
+    max-width: 750px;
+    margin: auto;
+}
+
+.finalContent h2 {
+    margin: 12px 0 15px;
+    color: #ffffff;
+    font-size: clamp(30px, 4vw, 45px);
+    line-height: 1.2;
+}
+
+.finalContent p {
+    margin: 0 auto 28px;
+    color: #d8e7f0;
+    line-height: 1.8;
+}
+
+.button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    background-color: #159957;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.button:hover {
+    background-color: #45c46b;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+    .reasonsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        min-height: 340px;
+        padding: 55px 18px;
+    }
+
+    .heroContent p {
+        font-size: 16px;
+    }
+
+    .introSection,
+    .reasonsSection {
+        padding: 60px 18px;
+    }
+
+    .reasonsGrid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .reasonCard {
+        padding: 27px 23px;
+    }
+
+    .finalSection {
+        padding: 60px 20px;
+    }
+}

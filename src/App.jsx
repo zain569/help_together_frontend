@@ -23,6 +23,10 @@ import AdminDashboard from "./components/adminDashboard";
 import Footer from "./components/footer";
 import FAQS from "./components/faqS";
 import GlobalLoading from "./components/GlobalLoading";
+import OurValues from "./components/ourValues";
+import OurStory from "./components/ourStory";
+import WhatWeDo from "./components/whatWeDo";
+import WhyHelpTogether from "./components/whyHelpTogether";
 
 function App() {
   useEffect(() => {
@@ -57,6 +61,10 @@ function App() {
         <Route path="/my-donations" element={<GetMyDonations />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-cancel" element={<PaymentFailed />} />
+        <Route path="/our-values" element={<OurValues />} />
+        <Route path="/our-story" element={<OurStory />} />
+        <Route path="/what-we-do" element={<WhatWeDo />} />
+        <Route path="/why-helptogether" element={<WhyHelpTogether />} />
       </Routes>
       <Footer />
       <GlobalLoading />

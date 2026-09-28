@@ -1,0 +1,229 @@
+.whatWeDoPage {
+    width: 100%;
+    background-color: #ffffff;
+    color: #123b63;
+}
+
+.hero {
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 20px;
+    text-align: center;
+    background: linear-gradient(
+        135deg,
+        #e9f6fd,
+        #ffffff 55%,
+        #eaf8f0
+    );
+}
+
+.heroContent {
+    max-width: 820px;
+}
+
+.heroContent > span,
+.introContent > span,
+.sectionHeading > span {
+    color: #159957;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.heroContent h1 {
+    margin: 15px 0;
+    font-size: clamp(38px, 6vw, 62px);
+    line-height: 1.1;
+}
+
+.heroContent p {
+    max-width: 680px;
+    margin: auto;
+    color: #617688;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.introSection {
+    max-width: 1150px;
+    margin: auto;
+    padding: 90px 25px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.introContent h2 {
+    margin: 12px 0 20px;
+    font-size: clamp(30px, 4vw, 45px);
+    line-height: 1.2;
+}
+
+.introContent p {
+    margin-bottom: 15px;
+    color: #687b8c;
+    line-height: 1.8;
+}
+
+.introCard {
+    padding: 40px;
+    border-left: 5px solid #159957;
+    border-radius: 18px;
+    background-color: #e9f6fd;
+}
+
+.cardIcon {
+    margin-bottom: 15px;
+    font-size: 35px;
+}
+
+.introCard h3 {
+    margin: 0 0 12px;
+    font-size: 25px;
+}
+
+.introCard p {
+    margin: 0;
+    color: #617688;
+    line-height: 1.7;
+}
+
+.servicesSection {
+    padding: 90px 25px;
+    background-color: #f6fbfd;
+}
+
+.sectionHeading {
+    max-width: 750px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.sectionHeading h2 {
+    margin: 12px 0 0;
+    font-size: clamp(30px, 4vw, 44px);
+}
+
+.servicesGrid {
+    max-width: 1050px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.serviceCard {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 20px;
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e2edf3;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(18, 59, 99, 0.06);
+}
+
+.number {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #123b63;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.serviceCard h3 {
+    margin: 3px 0 10px;
+    font-size: 20px;
+}
+
+.serviceCard p {
+    margin: 0;
+    color: #687b8c;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.ctaSection {
+    padding: 80px 20px;
+    background-color: #123b63;
+    text-align: center;
+}
+
+.ctaSection h2 {
+    margin: 0 0 15px;
+    color: #ffffff;
+    font-size: clamp(30px, 4vw, 44px);
+}
+
+.ctaSection p {
+    max-width: 650px;
+    margin: 0 auto 28px;
+    color: #d8e7f0;
+    line-height: 1.8;
+}
+
+.ctaButton {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    background-color: #159957;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.ctaButton:hover {
+    background-color: #45c46b;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 850px) {
+    .introSection {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 70px 22px;
+    }
+
+    .servicesGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        min-height: 330px;
+        padding: 55px 18px;
+    }
+
+    .heroContent p {
+        font-size: 16px;
+    }
+
+    .introSection,
+    .servicesSection {
+        padding: 60px 18px;
+    }
+
+    .introCard {
+        padding: 28px;
+    }
+
+    .serviceCard {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .ctaSection {
+        padding: 60px 20px;
+    }
+}

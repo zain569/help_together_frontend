@@ -24,6 +24,13 @@ function Navbar() {
         .map((part) => part.charAt(0).toUpperCase())
         .join('') || 'U';
     const isActive = (route) => route === '/' ? pathname === '/' : pathname.startsWith(route);
+    const additionalPages = [
+        { label: 'Our Values', route: '/our-values' },
+        { label: 'Our Story', route: '/our-story' },
+        { label: 'What We Do', route: '/what-we-do' },
+        { label: 'Why HelpTogether', route: '/why-helptogether' },
+    ];
+    const selectedAdditionalPage = additionalPages.find(({ route }) => isActive(route))?.route || '';
 
     useEffect(() => {
         const syncAuth = () => setAuth(readAuthSession());
@@ -104,6 +111,20 @@ function Navbar() {
                         <Link to="/campaigns" className={`${styles.navLink} ${isActive('/campaigns') ? styles.active : ''}`} onClick={closeMenu}>Campaigns</Link>
                         <Link to="/service-gifts" className={`${styles.navLink} ${isActive('/service-gifts') ? styles.active : ''}`} onClick={closeMenu}>Service Gifts</Link>
                         <Link to="/contact" className={`${styles.navLink} ${isActive('/contact') ? styles.active : ''}`} onClick={closeMenu}>Contact</Link>
+                        <select
+                            className={`${styles.pageSelect} ${selectedAdditionalPage ? styles.pageSelectActive : ''}`}
+                            aria-label="More pages"
+                            value={selectedAdditionalPage}
+                            onChange={(event) => {
+                                if (event.target.value) navigate(event.target.value);
+                                closeMenu();
+                            }}
+                        >
+                            <option value="" disabled>More pages</option>
+                            {additionalPages.map(({ label, route }) => (
+                                <option key={route} value={route}>{label}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className={styles.rightSide}>

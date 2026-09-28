@@ -14,6 +14,7 @@ function MakeaDonation() {
     const isServiceDonation = type?.toLowerCase() === 'service';
     const [donationTarget, setDonationTarget] = useState(null);
     const [amount, setAmount] = useState(isServiceDonation ? 0 : 1000);
+    const [donationType, setDonationType] = useState('general');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [submitError, setSubmitError] = useState('');
@@ -56,6 +57,7 @@ function MakeaDonation() {
 
     const donationDetails = {
         amount: Number(amount),
+        donationType,
         userId,
         ...(isServiceDonation ? { serviceGiftId: id } : { campaignId: id }),
     };
@@ -147,6 +149,18 @@ function MakeaDonation() {
 
                 <form className={styles.donationForm} onSubmit={handleSubmit}>
                     <h2>Donation Details</h2>
+                    <label className={styles.fieldLabel} htmlFor="donation-type">Donation Type</label>
+                    <select
+                        className={styles.donationTypeSelect}
+                        id="donation-type"
+                        name="donationType"
+                        value={donationType}
+                        onChange={(event) => setDonationType(event.target.value)}
+                    >
+                        <option value="general">General</option>
+                        <option value="zakat">Zakat</option>
+                        <option value="sadaqah">Sadaqah</option>
+                    </select>
                     {isServiceDonation ? (
                         <div className={styles.fixedAmount}>
                             <span>Fixed service gift amount</span>

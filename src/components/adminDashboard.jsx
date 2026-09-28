@@ -350,6 +350,7 @@ function AdminDashboard() {
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Method</th>
+                                <th>Donation Type</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -363,7 +364,7 @@ function AdminDashboard() {
                                                 <div className={styles.adminDonationUser}>
                                                     <img
                                                         className={styles.adminDonationUserImage}
-                                                        src={donation.user.profileimage}
+                                                        src={donation.user.profileImage}
                                                         alt={donation.user.firstname}
                                                     />
 
@@ -388,6 +389,8 @@ function AdminDashboard() {
                                             </td>
 
                                             <td className={styles.adminDonationMethod}>{donation.paymentMethod}</td>
+
+                                            <td>{donation.donationType}</td>
 
                                             <td className={styles.adminDonationDate}>{donation.createdAt}</td>
                                         </tr>
