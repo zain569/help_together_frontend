@@ -2,8 +2,8 @@ async function RegisterUserApi(RegisterUserData, image) {
     const backendApi = (import.meta.env.VITE_BACKEND_API || '').replace(/\/?$/, '/');
     const formData = new FormData();
 
-    formData.append('firstname', RegisterUserData.firstName || RegisterUserData.firstname || '');
-    formData.append('lastname', RegisterUserData.lastName || RegisterUserData.lastname || '');
+    formData.append('firstName', RegisterUserData.firstName || RegisterUserData.firstname || '');
+    formData.append('lastName', RegisterUserData.lastName || RegisterUserData.lastname || '');
     formData.append('email', RegisterUserData.email || '');
     formData.append('password', RegisterUserData.password || '');
     formData.append('role', 'user');
