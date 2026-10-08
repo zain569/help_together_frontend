@@ -73,7 +73,7 @@
 .navLinks {
     display: flex;
     align-items: center;
-    gap: clamp(16px, 2.2vw, 30px);
+    gap: clamp(12px, 1.6vw, 24px);
     flex-shrink: 0;
 }
 
@@ -103,38 +103,37 @@
     background: #159957;
 }
 
-.pageSelect {
-    width: 150px;
-    min-height: 40px;
-    padding: 0 10px;
-    border: 1px solid #dce8e1;
-    border-radius: 8px;
-    color: #334155;
-    background: #ffffff;
-    font: inherit;
-    font-size: 14px;
-    cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-}
-
-.pageSelect:hover,
-.pageSelect:focus-visible {
-    border-color: #159957;
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.12);
-}
-
-.pageSelectActive {
-    color: #117a45;
-    border-color: #b7e5c9;
-    background: #f7fbf8;
-}
-
 .rightSide {
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 0;
+}
+
+.quickActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quickDonateButton {
+    min-height: 42px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    color: #ffffff;
+    background: #159957;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.quickDonateButton:hover {
+    background: #117a45;
+    transform: translateY(-1px);
 }
 
 .searchForm {
@@ -363,6 +362,138 @@
     background: #b42318;
 }
 
+.currencyPicker {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.currencyTrigger {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 12px;
+    border: 1px solid #d8eae0;
+    border-radius: 999px;
+    color: #123b63;
+    background: #eef8f2;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.currencyTrigger:hover,
+.currencyTrigger[aria-expanded="true"] {
+    border-color: #8ccba5;
+    background: #e3f4e9;
+    box-shadow: 0 3px 12px rgba(16, 72, 52, 0.1);
+}
+
+.currencyTrigger:active {
+    transform: scale(0.97);
+}
+
+.currencyGlobe {
+    font-size: 19px;
+    line-height: 1;
+}
+
+.currencySymbol {
+    color: #526b61;
+    font-weight: 500;
+}
+
+.currencyChevron {
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 2px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease, margin 0.2s ease;
+}
+
+.currencyChevronOpen {
+    margin-top: 4px;
+    transform: rotate(225deg);
+}
+
+.currencyMenu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 30;
+    width: 320px;
+    max-height: min(390px, calc(100vh - 110px));
+    overflow-y: auto;
+    padding: 8px;
+    border: 1px solid #e1ebe5;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 16px 36px rgba(16, 72, 52, 0.16);
+    transform-origin: top right;
+    animation: currencyMenuIn 0.18s ease-out both;
+}
+
+.currencyOption {
+    width: 100%;
+    min-height: 43px;
+    display: grid;
+    grid-template-columns: 30px 48px 45px minmax(0, 1fr);
+    align-items: center;
+    gap: 7px;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #123b63;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.currencyOption:hover,
+.currencyOption:focus-visible {
+    border-color: #d6eee0;
+    outline: 0;
+    background: #eff8f2;
+    transform: translateX(2px);
+}
+
+.currencyOptionSelected {
+    border-color: #8ccba5;
+    background: #e7f5eb;
+}
+
+.currencyFlag {
+    font-size: 20px;
+    line-height: 1;
+    text-align: center;
+}
+
+.currencyOptionCode {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.currencyOptionSymbol {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.currencyOptionName {
+    overflow: hidden;
+    color: #60756a;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .activeProfile {
     box-shadow: 0 0 0 3px rgba(21, 153, 87, 0.18);
 }
@@ -393,20 +524,30 @@
 }
 
 @media (max-width: 1120px) {
-    .container { gap: 18px; }
-    .navigationArea { gap: 14px; }
-    .myDonations { display: none; }
+    .container {
+        gap: 18px;
+    }
+
+    .navigationArea {
+        gap: 14px;
+    }
+
+    .myDonations {
+        display: none;
+    }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1180px) {
     .container {
-        width: min(100% - 32px, 720px);
+        width: min(100% - 32px, 920px);
         min-height: 68px;
         padding: 10px 0;
         flex-wrap: wrap;
     }
 
-    .menuToggle { display: block; }
+    .menuToggle {
+        display: block;
+    }
 
     .navigationArea {
         display: none;
@@ -419,7 +560,9 @@
         animation: revealMenu 0.25s ease both;
     }
 
-    .menuOpen { display: flex; }
+    .menuOpen {
+        display: flex;
+    }
 
     .navLinks {
         align-items: stretch;
@@ -427,28 +570,44 @@
         gap: 2px;
     }
 
-    .navLink { padding: 10px 4px; }
-    .active::after { right: auto; width: 28px; }
+    .navLink {
+        padding: 10px 4px;
+    }
 
-    .pageSelect {
-        width: 100%;
-        min-height: 44px;
+    .active::after {
+        right: auto;
+        width: 28px;
     }
 
     .rightSide {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
         gap: 10px;
     }
 
+    .quickActions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
     .searchForm {
-        grid-column: 1 / -1;
         width: auto;
     }
 
     .loginButton,
     .registerButton,
-    .donateButton { text-align: center; }
+    .myDonations {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .loginButton,
+    .registerButton,
+    .donateButton {
+        text-align: center;
+    }
 
     .myDonations {
         display: flex;
@@ -460,29 +619,479 @@
         background: #f7fbf8;
     }
 
-    .profile { justify-self: start; }
+    .profile {
+        justify-self: start;
+    }
 
-    .logoutButton { justify-self: end; }
+    .currencyPicker {
+        justify-self: start;
+    }
+
+    .currencyTrigger {
+        min-height: 44px;
+    }
+
+    .quickDonateButton {
+        min-height: 44px;
+    }
+
+    .currencyMenu {
+        right: auto;
+        left: 0;
+        width: min(320px, calc(100vw - 40px));
+        transform-origin: top left;
+    }
+
+    .logoutButton {
+        justify-self: end;
+    }
 }
 
 @media (max-width: 420px) {
-    .container { width: min(100% - 24px, 380px); }
-    .logoImage { width: 42px; height: 42px; }
-    .logoText h1 { font-size: 18px; }
-    .logoText p { font-size: 9px; }
+    .container {
+        width: min(100% - 24px, 380px);
+    }
+
+    .logoImage {
+        width: 42px;
+        height: 42px;
+    }
+
+    .logoText h1 {
+        font-size: 18px;
+    }
+
+    .logoText p {
+        font-size: 9px;
+    }
 }
 
 @keyframes revealMenu {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes currencyMenuIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .navigationArea,
     .searchForm,
     .searchForm button,
-    .menuToggle span {
+    .menuToggle span,
+    .currencyTrigger,
+    .currencyChevron,
+    .currencyOption,
+    .currencyMenu {
         animation: none;
+        transition: none;
+    }
+}
+
+.aboutDropdown {
+    position: relative;
+}
+
+.campaignDropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.campaignMenuToggle {
+    display: grid;
+    width: 30px;
+    height: 38px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    color: #334155;
+    background: transparent;
+    cursor: pointer;
+}
+
+.campaignDropdown:hover .dropdownArrow,
+.campaignDropdown:focus-within .dropdownArrow,
+.campaignDropdownOpen .dropdownArrow {
+    transform: rotate(180deg);
+}
+
+.navbar {
+    animation: navbarEnter 360ms ease-out both;
+}
+
+.navLink::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: #45c46b;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 180ms ease;
+}
+
+.navLink:hover::after,
+.navLink:focus-visible::after,
+.active::after {
+    transform: scaleX(1);
+}
+
+.quickDonateButton:hover,
+.registerButton:hover,
+.donateButton:hover {
+    box-shadow: 0 8px 20px rgba(18, 59, 99, 0.16);
+}
+
+@keyframes navbarEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar,
+    .navLink::after {
+        animation: none;
+        transition: none;
+    }
+}
+
+@media (max-width: 1180px) {
+    .active::after {
+        right: auto;
+        left: 4px;
+        width: 28px;
+    }
+}
+
+.campaignMenu {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: -14px;
+    z-index: 101;
+    width: 290px;
+    padding: 8px;
+    border: 1px solid #e1ebe5;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 14px 32px rgba(16, 72, 52, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-7px);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.campaignDropdown:hover .campaignMenu,
+.campaignDropdown:focus-within .campaignMenu,
+.campaignDropdownOpen .campaignMenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.campaignMenu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px;
+    border-radius: 7px;
+    color: #123b63;
+    text-decoration: none;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+.campaignMenu a:hover,
+.campaignMenu a:focus-visible {
+    outline: 0;
+    color: #117a45;
+    background: #eff8f2;
+}
+
+.campaignMenu a > span:last-child {
+    display: grid;
+    gap: 4px;
+}
+
+.campaignMenu strong {
+    font-size: 13px;
+}
+
+.campaignMenu small {
+    color: #718096;
+    font-size: 11px;
+}
+
+.fundedMenuMark {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    color: #117a45;
+    background: #e2f5e9;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.aboutDropdown {
+    position: static;
+    display: flex;
+    align-items: center;
+}
+
+.aboutMenuToggle {
+    display: grid;
+    width: 30px;
+    height: 38px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    color: #334155;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dropdownArrow {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 16px;
+    transition: transform 0.2s ease;
+}
+
+.aboutDropdown:hover .dropdownArrow,
+.aboutDropdown:focus-within .dropdownArrow,
+.aboutDropdownOpen .dropdownArrow {
+    transform: rotate(180deg);
+}
+
+.aboutMegaMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 100;
+    padding: 32px 24px 40px;
+    background: #f4f5f7;
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+}
+
+.aboutDropdown:hover .aboutMegaMenu,
+.aboutDropdown:focus-within .aboutMegaMenu,
+.aboutDropdownOpen .aboutMegaMenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.aboutMenuContainer {
+    width: min(100%, 860px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(180px, 0.8fr);
+    gap: clamp(40px, 9vw, 112px);
+}
+
+.aboutMenuColumn h3 {
+    margin: 0 0 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d8dadd;
+    color: #123b63;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.aboutMenuLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 30px;
+}
+
+.aboutMenuColumn:nth-child(2) .aboutMenuLinks {
+    grid-template-columns: 1fr;
+}
+
+.aboutMenuLinks a {
+    color: #123b63;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.aboutMenuLinks a:hover,
+.aboutMenuLinks a:focus-visible {
+    outline: none;
+    color: #159957;
+    transform: translateX(4px);
+}
+
+@media (max-width: 1180px) {
+    .campaignDropdown {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 38px;
+    }
+
+    .campaignMenuToggle {
+        width: 38px;
+        justify-self: end;
+    }
+
+    .campaignMenu {
+        position: static;
+        grid-column: 1 / -1;
+        width: auto;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 8px 0 18px;
+        border: 0;
+        border-left: 2px solid transparent;
+        border-radius: 0;
+        box-shadow: none;
+        opacity: 0;
+        visibility: hidden;
+        transform: none;
+        transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.25s ease, visibility 0.2s ease;
+    }
+
+    .campaignDropdownOpen .campaignMenu {
+        max-height: 220px;
+        padding: 8px 8px 8px 18px;
+        border-left-color: #d7eee2;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .campaignMenu a {
+        padding: 8px;
+    }
+
+    .aboutMegaMenu {
+        position: static;
+        grid-column: 1 / -1;
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 8px 0 18px;
+        border-top: 0;
+        border-left: 2px solid transparent;
+        box-shadow: none;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: none;
+        transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.25s ease, visibility 0.25s ease;
+    }
+
+    .aboutDropdown {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 30px;
+    }
+
+    .aboutMenuToggle {
+        width: 38px;
+        justify-self: end;
+    }
+
+    .aboutDropdownOpen .aboutMegaMenu {
+        max-height: 520px;
+        padding: 18px 8px 8px 18px;
+        border-left-color: #d7eee2;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .aboutMenuContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .aboutMenuColumn h3 {
+        margin-bottom: 12px;
+        padding-bottom: 7px;
+        font-size: 14px;
+    }
+
+    .aboutMenuLinks,
+    .aboutMenuColumn:nth-child(2) .aboutMenuLinks {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .aboutMenuLinks a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .aboutMegaMenu {
+        padding-left: 12px;
+    }
+
+    .aboutMenuContainer {
+        gap: 16px;
+    }
+
+    .aboutMenuLinks a {
+        font-size: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .campaignMenu,
+    .campaignMenu a,
+    .dropdownArrow {
+        transition: none;
+    }
+
+    .aboutMegaMenu,
+    .dropdownArrow,
+    .aboutMenuLinks a {
         transition: none;
     }
 }

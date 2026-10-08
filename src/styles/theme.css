@@ -1,0 +1,59 @@
+:root {
+    --brand-navy: #123b63;
+    --brand-green: #159957;
+    --brand-green-bright: #45c46b;
+    --surface-blue: #e9f6fd;
+    --surface-green: #eaf8ef;
+    --surface-white: #ffffff;
+    --text-primary: #193b59;
+    --text-muted: #60758a;
+    --border-soft: #d8e9f1;
+    --focus-ring: rgba(21, 153, 87, 0.28);
+}
+
+:is(button, a)[class*="button" i]:not([class*="secondary" i]):not([class*="share" i]):not([class*="history" i]):not([class*="clear" i]):not([class*="cancel" i]):not([class*="close" i]):not([class*="delete" i]):not([class*="remove" i]):not([class*="logout" i]):not([class*="danger" i]),
+:is(button, a)[class*="btn" i]:not([class*="secondary" i]):not([class*="share" i]):not([class*="history" i]):not([class*="clear" i]):not([class*="cancel" i]):not([class*="close" i]):not([class*="delete" i]):not([class*="remove" i]):not([class*="logout" i]):not([class*="danger" i]) {
+    border-color: var(--brand-green);
+    color: var(--surface-white);
+    background-color: var(--brand-green);
+    font-weight: 700;
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+:is(button, a)[class*="button" i]:not([class*="secondary" i]):not([class*="share" i]):not([class*="history" i]):not([class*="clear" i]):not([class*="cancel" i]):not([class*="close" i]):not([class*="delete" i]):not([class*="remove" i]):not([class*="logout" i]):not([class*="danger" i]):hover,
+:is(button, a)[class*="btn" i]:not([class*="secondary" i]):not([class*="share" i]):not([class*="history" i]):not([class*="clear" i]):not([class*="cancel" i]):not([class*="close" i]):not([class*="delete" i]):not([class*="remove" i]):not([class*="logout" i]):not([class*="danger" i]):hover {
+    border-color: #117a45;
+    color: var(--surface-white);
+    background-color: #117a45;
+    box-shadow: 0 8px 20px rgba(18, 59, 99, 0.16);
+    transform: translateY(-1px);
+}
+
+:is(button, a)[class*="button" i]:is([class*="secondary" i], [class*="share" i], [class*="history" i], [class*="clear" i]),
+:is(button, a)[class*="btn" i]:is([class*="secondary" i], [class*="share" i], [class*="history" i], [class*="clear" i]) {
+    border-color: var(--border-soft);
+    color: var(--brand-navy);
+    background-color: var(--surface-white);
+}
+
+:is(button, a)[class*="button" i]:is([class*="secondary" i], [class*="share" i], [class*="history" i], [class*="clear" i]):hover,
+:is(button, a)[class*="btn" i]:is([class*="secondary" i], [class*="share" i], [class*="history" i], [class*="clear" i]):hover {
+    border-color: var(--brand-green);
+    color: var(--brand-navy);
+    background-color: var(--surface-blue);
+}
+
+:is(button, a):focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :is(button, a)[class*="button" i],
+    :is(button, a)[class*="btn" i] {
+        transition: none;
+    }
+}

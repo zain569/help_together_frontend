@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #0a2b46;
+    background-color: #123b63;
     color: #ffffff;
     box-sizing: border-box;
     overflow: hidden;
@@ -21,6 +21,41 @@
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
+}
+
+.footerLinkGroup {
+    min-width: 145px;
+}
+
+.footerLinkGroup h3,
+.contactus h3 {
+    margin: 0 0 14px;
+    color: #45c46b;
+    font-size: 16px;
+}
+
+.footerLinkGroup ul,
+.contactus ul {
+    margin: 0;
+}
+
+.footerLinkGroup li {
+    margin: 9px 0;
+    text-align: left;
+}
+
+.footerLinkGroup li a {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.4;
+    transition: color .2s ease, transform .2s ease;
+}
+
+.footerLinkGroup li a:hover {
+    color: #45c46b;
+    transform: translateX(3px);
 }
 
 /* =========================
@@ -163,8 +198,7 @@ ul li:hover::after {
         max-width: 350px;
     }
 
-    .quickLinks,
-    .support,
+    .footerLinkGroup,
     .contactus {
         flex: 1 1 180px;
         min-width: 150px;
@@ -189,8 +223,7 @@ ul li:hover::after {
         max-width: 350px;
     }
 
-    .quickLinks,
-    .support,
+    .footerLinkGroup,
     .contactus {
         width: 100%;
         min-width: 0;

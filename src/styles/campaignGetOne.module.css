@@ -31,13 +31,13 @@
 .progressPanel { padding: 20px 16px; border-radius: 12px; background: #ffffff; box-shadow: 0 8px 22px rgba(18, 59, 99, 0.08); }
 .amountRow, .moneyRow { display: flex; justify-content: space-between; align-items: center; }
 .amountRow strong { color: #123b63; font-size: 22px; }
-.amountRow b { color: #08a36b; font-size: 20px; }
+.amountRow b { color: #159957; font-size: 20px; }
 .progressPanel > p { margin: 5px 0 13px; color: #607b91; font-size: 11px; }
 .progressTrack, .smallTrack { height: 9px; overflow: hidden; border-radius: 10px; background: #e3eef5; }
-.progressTrack span, .smallTrack span { display: block; height: 100%; border-radius: inherit; background: #08a36b; }
+.progressTrack span, .smallTrack span { display: block; height: 100%; border-radius: inherit; background: #159957; }
 .moneyRow { margin: 18px 0; color: #607b91; font-size: 12px; }
 .moneyRow strong { color: #123b63; }
-.progressPanel button { width: 100%; padding: 11px; border: 1px solid #08a36b; border-radius: 9px; background: #08a36b; color: white; cursor: pointer; font-weight: 800; }
+.progressPanel button { width: 100%; padding: 11px; border: 1px solid #159957; border-radius: 9px; background: #159957; color: white; cursor: pointer; font-weight: 800; }
 .progressPanel button span { margin-left: 8px; }
 .progressPanel .shareButton { margin-top: 9px; background: white; color: #159957; }
 .relatedSection { max-width: 1140px; margin: 52px auto 0; }

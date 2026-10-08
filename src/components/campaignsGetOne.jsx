@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import GetCampaign from '../apis/campaignsAPI/getCampaign.get';
 import GetAllCampaigns from '../apis/campaignsAPI/getallCampigns.get';
 import styles from '../styles/campaignGetOne.module.css';
+import { useCurrency } from '../utils/useCurrency';
 
 function formatDate(dateValue) {
 	if (!dateValue) return 'Not available';
@@ -27,6 +28,7 @@ function amount(value) {
 function CampaignsGetOne() {
 	const { id } = useParams();
 	const navigate = useNavigate();
+	const { formatCurrency } = useCurrency();
 	const [campaign, setCampaign] = useState(null);
 	const [relatedCampaigns, setRelatedCampaigns] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -91,10 +93,10 @@ function CampaignsGetOne() {
 				</div>
 
 				<div className={styles.progressPanel}>
-					<div className={styles.amountRow}><strong>PKR {amount(raised)}</strong><b>{Math.round(progress)}%</b></div>
-					<p>raised of PKR {amount(goal)}</p>
+					<div className={styles.amountRow}><strong>{formatCurrency(raised)}</strong><b>{Math.round(progress)}%</b></div>
+					<p>raised of {formatCurrency(goal)}</p>
 					<div className={styles.progressTrack} aria-label={`${Math.round(progress)} percent raised`}><span style={{ width: `${progress}%` }} /></div>
-					<div className={styles.moneyRow}><span>Money left</span><strong>PKR {amount(remaining)}</strong></div>
+					<div className={styles.moneyRow}><span>Money left</span><strong>{formatCurrency(remaining)}</strong></div>
 					<button type="button" onClick={() => navigate(`/donate/campaign/${campaignId}`)}>♥ Donate Now <span>→</span></button>
 					<button type="button" className={styles.shareButton}>↗ Share Campaign</button>
 				</div>
@@ -117,7 +119,7 @@ function CampaignsGetOne() {
 							return (
 								<article className={styles.relatedCard} key={relatedId} onClick={() => navigate(`/campaigns/${relatedId}`)}>
 									<img src={relatedCampaign.image || relatedCampaign.imageUrl || relatedCampaign.coverImage} alt="" />
-									<div><h3>{relatedCampaign.title || relatedCampaign.name}</h3><p>{relatedCampaign.description}</p><div className={styles.smallTrack}><span style={{ width: `${relatedProgress}%` }} /></div><small>PKR {amount(relatedRaised)} raised</small></div>
+									<div><h3>{relatedCampaign.title || relatedCampaign.name}</h3><p>{relatedCampaign.description}</p><div className={styles.smallTrack}><span style={{ width: `${relatedProgress}%` }} /></div><small>{formatCurrency(relatedRaised)} raised</small></div>
 								</article>
 							);
 						})}

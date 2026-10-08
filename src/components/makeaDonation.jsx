@@ -1,25 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import GetOneCampaign from '../apis/campaignsAPI/getOneCampaign.get';
 import GetOneService from '../apis/serviceandgiftsAPIS/getoneService';
 import { readAuthSession } from '../utils/authSession';
 import styles from '../styles/makeaDonation.module.css';
-
-function formatAmount(value) {
-    return Number(value || 0).toLocaleString();
-}
+import { useCurrency } from '../utils/useCurrency';
+import MakeSubscriptions from '../apis/donations/makeSubscription';
+import CreateNormalDonation from '../apis/donations/createNormalDonation.post';
 
 function MakeaDonation() {
     const { type, id } = useParams();
+    const { currencySymbol, exchangeRate, formatCurrency } = useCurrency();
     const isServiceDonation = type?.toLowerCase() === 'service';
     const [donationTarget, setDonationTarget] = useState(null);
     const [amount, setAmount] = useState(isServiceDonation ? 0 : 1000);
+    const [customAmount, setCustomAmount] = useState(null);
+    const amountRef = useRef(isServiceDonation ? 0 : 1000);
     const [donationType, setDonationType] = useState('general');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [submitError, setSubmitError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [subscriptionType, setSubscriptionType] = useState('general');
+    const [paymentMethod, setPaymentMethod] = useState('STRIPE');
 
     useEffect(() => {
         let isCurrent = true;
@@ -31,7 +35,11 @@ function MakeaDonation() {
                 if (!isCurrent) return;
                 const target = isServiceDonation ? data?.serviceGift || data : data?.campaign || data;
                 setDonationTarget(target);
-                if (isServiceDonation) setAmount(Number(target?.price || 0));
+                if (isServiceDonation) {
+                    const giftPrice = Number(target?.price || 0);
+                    amountRef.current = giftPrice;
+                    setAmount(giftPrice);
+                }
             })
             .catch((fetchError) => {
                 if (isCurrent) setError(`Unable to load this ${isServiceDonation ? 'service' : 'campaign'}. Please try again.`);
@@ -43,6 +51,10 @@ function MakeaDonation() {
 
         return () => { isCurrent = false; };
     }, [id, isServiceDonation]);
+
+    useEffect(() => {
+        setCustomAmount((Number(amountRef.current) * exchangeRate).toFixed(2));
+    }, [exchangeRate]);
 
     if (loading) return <main className={styles.state}>Loading donation details...</main>;
     if (error || !donationTarget) return <main className={styles.state}>{error || 'Donation details not found.'}</main>;
@@ -58,6 +70,7 @@ function MakeaDonation() {
     const donationDetails = {
         amount: Number(amount),
         donationType,
+        paymentMethod,
         userId,
         ...(isServiceDonation ? { serviceGiftId: id } : { campaignId: id }),
     };
@@ -72,29 +85,21 @@ function MakeaDonation() {
             return;
         }
 
-        if (!donationDetails.amount || donationDetails.amount < 0.01) {
-            setSubmitError('Please enter a valid donation amount.');
+        if (!donationDetails.amount || donationDetails.amount < 150) {
+            setSubmitError(`Please enter a valid donation amount above then ${formatCurrency(150)}.`);
             return;
         }
 
         setIsSubmitting(true);
         try {
-            const backendApi = (import.meta.env.VITE_BACKEND_API || '').replace(/\/?$/, '/');
-            const response = await fetch(`${backendApi}donation`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(donationDetails),
-            });
-
-            const donationResponse = await response.json();
+            const response = await CreateNormalDonation(donationDetails);
 
             if (!response.ok) {
-                throw new Error(donationResponse?.message || `Donation failed (${response.status})`);
+                throw new Error(response?.message || `Donation failed (${response?.status})`);
             }
 
-            if (donationResponse?.checkoutUrl) {
-                window.location.assign(donationResponse.checkoutUrl);
+            if (response.checkoutUrl && paymentMethod === "STRIPE") {
+                window.location.assign(response.checkoutUrl);
                 return;
             }
 
@@ -104,6 +109,23 @@ function MakeaDonation() {
             setSubmitError('We could not process your donation. Please try again.');
         } finally {
             setIsSubmitting(false);
+        }
+    };
+
+    const handleSubscription = async (frequency) => {
+        const userData = {
+            frequency,
+            subscriptionType,
+        };
+
+        try {
+            const response = await MakeSubscriptions(userData);
+
+            if (response?.url) {
+                window.location.assign(response.url);
+            }
+        } catch (err) {
+            console.error('Subscription failed:', err);
         }
     };
 
@@ -129,14 +151,14 @@ function MakeaDonation() {
                     </div>
 
                     <div className={styles.progressSummary}>
-                        <div><span>Collected</span><strong>PKR {formatAmount(raised)}</strong></div>
-                        <div className={styles.goal}><span>Goal</span><strong>PKR {formatAmount(goal)}</strong></div>
+                        <div><span>Collected</span><strong>{formatCurrency(raised)}</strong></div>
+                        <div className={styles.goal}><span>Goal</span><strong>{formatCurrency(goal)}</strong></div>
                     </div>
                     <div className={styles.progressTrack} aria-label={`${Math.round(progress)} percent funded`}><span style={{ width: `${progress}%` }} /></div>
                     <p className={styles.progressPercent}>{Math.round(progress)}% funded</p>
 
                     <div className={styles.metaGrid}>
-                        <div><span className={styles.metaIcon}>+</span><p><b>{isServiceDonation ? 'Gift price' : 'Category'}</b>{isServiceDonation ? `PKR ${formatAmount(amount)}` : donationTarget.category || 'Community'}</p></div>
+                        <div><span className={styles.metaIcon}>+</span><p><b>{isServiceDonation ? 'Gift price' : 'Category'}</b>{isServiceDonation ? formatCurrency(amount) : donationTarget.category || 'Community'}</p></div>
                         <div><span className={styles.metaIcon}>+</span><p><b>Beneficiaries</b>{donationTarget.beneficiaries || 'Many families'}</p></div>
                         <div><span className={styles.metaIcon}>+</span><p><b>{isServiceDonation ? 'Availability' : 'Started'}</b>{isServiceDonation ? 'Available now' : donationTarget.startDate ? new Date(donationTarget.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'}</p></div>
                     </div>
@@ -164,19 +186,36 @@ function MakeaDonation() {
                     {isServiceDonation ? (
                         <div className={styles.fixedAmount}>
                             <span>Fixed service gift amount</span>
-                            <strong>PKR {formatAmount(amount)}</strong>
+                            <strong>{formatCurrency(amount)}</strong>
                         </div>
                     ) : (
                         <>
                             <label className={styles.fieldLabel} htmlFor="custom-amount">Enter donation amount</label>
-                            <div className={styles.amountInput}><span>PKR</span><input id="custom-amount" type="number" min="0.01" step="0.01" value={amount} onChange={(event) => setAmount(event.target.value)} placeholder="Enter amount" /></div>
+                            <div className={styles.amountInput}><span>{currencySymbol}</span><input id="custom-amount" type="number" min="0.01" step="0.01" value={customAmount ?? (Number(amount) * exchangeRate).toFixed(2)} onChange={(event) => {
+                                const enteredAmount = event.target.value;
+                                setCustomAmount(enteredAmount);
+                                const baseAmount = enteredAmount === '' ? '' : Number(enteredAmount) / exchangeRate;
+                                amountRef.current = baseAmount;
+                                setAmount(baseAmount);
+                            }} placeholder="Enter amount" /></div>
                         </>
                     )}
 
                     <fieldset className={styles.paymentFieldset}>
                         <legend>Choose Payment Method</legend>
                         <div className={styles.paymentOptions}>
-                            <div className={`${styles.paymentCard} ${styles.selected}`}><span className={styles.paymentIcon}>▣</span><span><strong>Card payment</strong><small>Credit / Debit Card</small></span><b>Selected</b></div>
+                            <label className={`${styles.paymentCard} ${paymentMethod === 'STRIPE' ? styles.selected : ''}`}>
+                                <input type="radio" name="paymentMethod" value="STRIPE" checked={paymentMethod === 'STRIPE'} onChange={(event) => setPaymentMethod(event.target.value)} />
+                                <span className={styles.paymentIcon}>▣</span>
+                                <span><strong>Card payment</strong><small>Credit / Debit Card</small></span>
+                                {paymentMethod === 'STRIPE' && <b>Selected</b>}
+                            </label>
+                            <label className={`${styles.paymentCard} ${paymentMethod === 'JAZZCASH' ? styles.selected : ''}`}>
+                                <input type="radio" name="paymentMethod" value="JAZZCASH" checked={paymentMethod === 'JAZZCASH'} onChange={(event) => setPaymentMethod(event.target.value)} />
+                                <span className={styles.paymentIcon}>☏</span>
+                                <span><strong>JazzCash</strong><small>Pay with your JazzCash account</small></span>
+                                {paymentMethod === 'JAZZCASH' && <b>Selected</b>}
+                            </label>
                         </div>
                     </fieldset>
 
@@ -186,6 +225,56 @@ function MakeaDonation() {
                     <p className={styles.securityNote}>▣ Your payment information is safe and secure.</p>
                     <div className={styles.formFooter}><Link to={isServiceDonation ? '/service-gifts' : `/campaigns/${id}`}>← &nbsp;Back to {isServiceDonation ? 'Services' : 'Campaign'}</Link></div>
                 </form>
+            </section>
+            <section className={styles.subscriptionSection}>
+                <div className={styles.subscriptionsConttent}>
+                    <span>MONTHLY SUBSCRIPTIONS</span>
+                    <h3>    Choose Your Monthly Support </h3>
+                    <p>Select a contribution amount that fits your heart. Your support will be authomatically charged every duration you set and help us countinue our mission</p>
+                    <div className={styles.subscriptionsFeilds}>
+                        <div>
+                            <span>Support</span>
+                            <p>Education</p>
+                        </div>
+                        <div>
+                            <span>Provide</span>
+                            <p>Food Assistant</p>
+                        </div>
+                        <div>
+                            <span>Improve</span>
+                            <p>Healthcare</p>
+                        </div>
+                        <div>
+                            <span>Help</span>
+                            <p>Peoples in Need</p>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.subscriptionType}>
+                    <label htmlFor="subscriptionType">Select Subscription Type</label>
+                    <select
+                        name="subscriptionType"
+                        id="subscriptionType"
+                        value={subscriptionType}
+                        onChange={(event) => setSubscriptionType(event.target.value)}
+                    >
+                        <option value="general">General</option>
+                        <option value="zakat">Zakat</option>
+                        <option value="sadaqah">Sadaqah</option>
+                    </select>
+                </div>
+                <div className={styles.subscriptionBundles}>
+                    <div className={styles.subscriptionnundle}>
+                        <span>{formatCurrency(1000)} / month</span>
+                        <p>Provides essential supplies and support for a child's & Peoples in Need</p>
+                        <button type="button" onClick={() => handleSubscription('monthly')}>Donate Monthly</button>
+                    </div>
+                    <div className={styles.subscriptionnundle}>
+                        <span>{formatCurrency(9999)} / year</span>
+                        <p>Provides essential supplies and support for a child's & Peoples in Need</p>
+                        <button type="button" onClick={() => handleSubscription('yearly')}>Donate Yearly</button>
+                    </div>
+                </div>
             </section>
         </main>
     );

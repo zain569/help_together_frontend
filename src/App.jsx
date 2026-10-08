@@ -27,6 +27,14 @@ import OurValues from "./components/ourValues";
 import OurStory from "./components/ourStory";
 import WhatWeDo from "./components/whatWeDo";
 import WhyHelpTogether from "./components/whyHelpTogether";
+import OurImpact from "./components/ourImpact";
+import OurPartners from "./components/ourPartners";
+import OurSuccessStories from "./components/success-story";
+import { CurrencyProvider } from "./utils/CurrencyProvider";
+import FundedCampaigns from "./components/fullyFundedCauses";
+import CampaignsUpdates from "./components/updates";
+import QuickDonate from "./components/quickDonate";
+import "./styles/theme.css";
 
 function App() {
   useEffect(() => {
@@ -39,36 +47,44 @@ function App() {
   }, []);
 
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/dashboard" element={<AdminDashboard />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/how-it-work" element={<HowItWorks />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/term-condition" element={<TermsConditions />} />
-        <Route path="/service-gifts/:id" element="ServiceGiftDetails" />
-        <Route path="/campaigns" element={<Campaigns />} />
-        <Route path="/donate/:type/:id" element={<MakeaDonation />} />
-        <Route path="/campaigns/:id" element={<CampaignsGetOne />} />
-        <Route path="/service-gifts" element={<ServiceAndGifts />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/faq" element={<FAQS />} />
-        <Route path="/profile/:id" element={<MyProfile />} />
-        <Route path="/my-donations" element={<GetMyDonations />} />
-        <Route path="/payment-success" element={<PaymentSuccess />} />
-        <Route path="/payment-cancel" element={<PaymentFailed />} />
-        <Route path="/our-values" element={<OurValues />} />
-        <Route path="/our-story" element={<OurStory />} />
-        <Route path="/what-we-do" element={<WhatWeDo />} />
-        <Route path="/why-helptogether" element={<WhyHelpTogether />} />
-      </Routes>
-      <Footer />
-      <GlobalLoading />
-    </>
+    <CurrencyProvider>
+      <>
+        <Navbar />
+        <Routes>
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/how-it-work" element={<HowItWorks />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/term-condition" element={<TermsConditions />} />
+          <Route path="/service-gifts/:id" element="ServiceGiftDetails" />
+          <Route path="/campaigns" element={<Campaigns />} />
+          <Route path="/donate/:type/:id" element={<MakeaDonation />} />
+          <Route path="/campaigns/:id" element={<CampaignsGetOne />} />
+          <Route path="/service-gifts" element={<ServiceAndGifts />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQS />} />
+          <Route path="/profile/:id" element={<MyProfile />} />
+          <Route path="/my-donations" element={<GetMyDonations />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-cancel" element={<PaymentFailed />} />
+          <Route path="/our-values" element={<OurValues />} />
+          <Route path="/our-story" element={<OurStory />} />
+          <Route path="/what-we-do" element={<WhatWeDo />} />
+          <Route path="/why-helptogether" element={<WhyHelpTogether />} />
+          <Route path="/our-impact" element={<OurImpact />} />
+          <Route path="/our-partners" element={<OurPartners />} />
+          <Route path="/our-success-story" element={<OurSuccessStories />} />
+          <Route path="/funded_Campaigns" element={<FundedCampaigns />} />
+          <Route path="/campaigns-updates" element={<CampaignsUpdates />} />
+          <Route path="/quick-donate" element={<QuickDonate />} />
+        </Routes>
+        <Footer />
+        <GlobalLoading />
+      </>
+    </CurrencyProvider>
   )
 }
 

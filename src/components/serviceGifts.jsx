@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from '../styles/serviceGifts.module.css'
 import ServiceGifts from '../apis/gifts.get';
+import { useCurrency } from '../utils/useCurrency';
 
 function ServiceAndGifts() {
+    const { formatCurrency } = useCurrency();
     const [gifts, setGifts] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
@@ -60,7 +62,7 @@ function ServiceAndGifts() {
                             <div className={styles.giftText}>
                                 <h3>{gift.name}</h3>
                                 <p className={styles.giftDescription}>{gift.description}</p>
-                                <p className={styles.giftCost}><i>Cost:</i><span> {gift.price}</span></p>
+                                <p className={styles.giftCost}><i>Cost:</i><span> {formatCurrency(gift.price)}</span></p>
                                 <button onClick={() => { navigate(`/donate/service/${gift.id}`) }}>🎁 Give Gift</button>
                             </div>
                         </div>

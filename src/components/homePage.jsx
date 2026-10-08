@@ -6,9 +6,11 @@ import ServiceGifts from '../apis/gifts.get';
 import GetRiews from '../apis/getreviews.get';
 import { readAuthSession } from '../utils/authSession';
 import PostRevies from '../apis/sendReview.post';
+import { useCurrency } from '../utils/useCurrency';
 
 function HomePage() {
     const navigate = useNavigate();
+    const { formatCurrency } = useCurrency();
     const reviewsTrackRef = useRef(null);
     const [users, setUsers] = useState([]);
     const [gifts, setGifts] = useState([]);
@@ -107,7 +109,7 @@ function HomePage() {
             <section className={styles.ourUsers}>
                 <div className={styles.users}>
                     <div className={styles.user}>
-                        <h3>PKR: <i>{users.totalDonations}</i><span>Total Donations</span></h3>
+                        <h3><i>{formatCurrency(users.totalDonations)}</i><span>Total Donations</span></h3>
                     </div>
                     <div className={styles.user}>
                         <h3><i>{users.totalActiveCampaigns}</i><span>Active Campaigns</span></h3>
@@ -138,7 +140,7 @@ function HomePage() {
                             <div className={styles.giftText}>
                                 <h3>{gift.name}</h3>
                                 <p className={styles.giftDescription}>{gift.description}</p>
-                                <p className={styles.giftCost}><i>Cost:</i><span> {gift.price}</span></p>
+                                <p className={styles.giftCost}><i>Cost:</i><span> {formatCurrency(gift.price)}</span></p>
                                 <button onClick={() => { navigate(`/donate/service/${gift.id}`) }}>🎁 Give Gift</button>
                             </div>
                         </div>
@@ -259,6 +261,6 @@ function HomePage() {
             )}
         </>
     )
-}
+}   
 
 export default HomePage;

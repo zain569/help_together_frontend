@@ -41,7 +41,7 @@
 
 .hero h1 {
     margin: 0 0 20px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: clamp(40px, 5vw, 62px);
     line-height: 1.1;
 }
@@ -87,7 +87,7 @@
 
 .heroCircle strong {
     margin-top: 8px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: 28px;
 }
 
@@ -123,7 +123,7 @@
 
 .floatingCard strong {
     display: block;
-    color: #0a2b46;
+    color: #123b63;
 }
 
 .floatingCard p {
@@ -154,7 +154,7 @@
 
 .sectionHeader h2 {
     margin: 0 0 15px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: clamp(30px, 4vw, 44px);
 }
 
@@ -212,7 +212,7 @@
 
 .stepCard h3 {
     margin: 0 0 12px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: 20px;
 }
 
@@ -245,7 +245,7 @@
 
 .donorContent h2 {
     margin: 0 0 20px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: clamp(30px, 4vw, 45px);
 }
 
@@ -312,7 +312,7 @@
 
 .handCard h3 {
     margin: 15px 0 8px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: 25px;
 }
 
@@ -349,7 +349,7 @@
 
 .flowItem h3 {
     margin: 12px 0 8px;
-    color: #0a2b46;
+    color: #123b63;
     font-size: 19px;
 }
 
@@ -378,7 +378,7 @@
     justify-content: space-between;
     gap: 30px;
     border-radius: 18px;
-    background: #0a2b46;
+    background: #123b63;
 }
 
 .cta > div {

@@ -1,4 +1,4 @@
-:root { --navy: #0d477e; --green: #08aa78; --ink: #244e7d; --line: #dcecf5; }
+:root { --navy: #123b63; --green: #159957; --ink: #193b59; --line: #d8e9f1; }
 .page { min-height: 100vh; background: #f9fdfe; color: var(--ink); font-family: 'Trebuchet MS', sans-serif; }
 .heroSection { min-height: 175px; display: flex; align-items: center; background: url('/mydonations-hero-img.png') center / cover no-repeat; }
 .heroContent { width: min(1010px, 100%); margin: 0 auto; padding: 28px 30px; }
@@ -8,7 +8,7 @@
 .donationLayout { width: min(1020px, calc(100% - 32px)); margin: 24px auto 50px; display: grid; grid-template-columns: 1.12fr .98fr; gap: 14px; }
 .campaignCard, .donationForm { padding: 20px; border: 1px solid #e4f0f5; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px rgba(28, 94, 127, .07); }
 .campaignIntro { display: grid; grid-template-columns: 215px 1fr; gap: 18px; align-items: start; }.campaignImage { width: 100%; height: 132px; object-fit: cover; border-radius: 8px; background: #eaf6f8; }
-.badge { display: inline-block; margin: 0 0 8px; padding: 6px 13px; border-radius: 20px; background: #e8f7ff; color: #1685ce; font-size: 11px; font-weight: 700; }.campaignIntro h2, .donationForm h2 { margin: 0 0 8px; color: var(--navy); font-size: 19px; }.campaignIntro p { margin: 0; font-size: 12px; line-height: 1.7; }
+.badge { display: inline-block; margin: 0 0 8px; padding: 6px 13px; border-radius: 20px; background: #eaf8ef; color: #159957; font-size: 11px; font-weight: 700; }.campaignIntro h2, .donationForm h2 { margin: 0 0 8px; color: var(--navy); font-size: 19px; }.campaignIntro p { margin: 0; font-size: 12px; line-height: 1.7; }
 .progressSummary { display: flex; justify-content: space-between; margin-top: 17px; font-size: 11px; }.progressSummary div { display: grid; gap: 3px; }.progressSummary span { color: #547498; }.progressSummary strong { color: var(--navy); font-size: 13px; }.goal { text-align: right; }
 .progressTrack { height: 9px; margin-top: 9px; overflow: hidden; border-radius: 8px; background: #e7f0f5; }.progressTrack span { display: block; height: 100%; border-radius: inherit; background: var(--green); }.progressPercent { margin: 6px 0 17px; color: #537497; font-size: 11px; text-align: center; }
 .metaGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 15px 10px; border-radius: 10px; background: #f1fcfa; }.metaGrid > div { display: flex; align-items: center; gap: 9px; min-width: 0; }.metaGrid > div + div { border-left: 1px solid #d9eee9; padding-left: 12px; }.metaIcon { display: grid; place-items: center; width: 21px; height: 21px; border-radius: 50%; background: #d7f6ec; color: var(--green); font-weight: 700; }.metaGrid p { margin: 0; color: #223f5f; font-size: 10px; }.metaGrid b { display: block; margin-bottom: 3px; color: var(--green); font-size: 10px; font-weight: 500; }
@@ -18,5 +18,36 @@
 .fixedAmount { display: flex; align-items: center; justify-content: space-between; padding: 13px; border: 1px solid #bcebdc; border-radius: 7px; background: #f1fcf8; color: var(--ink); font-size: 11px; }.fixedAmount strong { color: var(--green); font-size: 15px; }.paymentFieldset { margin: 20px 0 0; padding: 0; border: 0; }.paymentFieldset legend { margin-bottom: 14px; color: var(--navy); font-size: 13px; font-weight: 700; }.paymentOptions { grid-template-columns: 1fr; }.paymentCard { display: flex; align-items: center; gap: 11px; min-height: 40px; padding: 12px; border: 1px solid var(--green); border-radius: 7px; background: #f8fffd; box-shadow: 0 0 0 1px var(--green); }.paymentIcon { color: var(--navy); font-size: 22px; }.paymentCard span:nth-child(2) { display: grid; flex: 1; gap: 4px; }.paymentCard small { color: #7894b0; font-size: 9px; }.paymentCard > b { color: var(--green); font-size: 10px; }
 .formError, .formSuccess { margin: 14px 0 0; padding: 9px 11px; border-radius: 6px; font-size: 11px; line-height: 1.4; }.formError { background: #fff1f1; color: #b84242; }.formSuccess { background: #effcf6; color: #16835f; }
 .submitButton { width: 100%; margin-top: 21px; padding: 12px; border: 0; border-radius: 7px; background: var(--green); color: white; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; }.submitButton:disabled { cursor: not-allowed; opacity: .55; }.submitButton span { margin-right: 8px; font-size: 18px; vertical-align: -2px; }.securityNote { margin: 13px 0 20px; color: #6d88a7; font-size: 10px; text-align: center; }.formFooter { padding-top: 17px; border-top: 1px solid var(--line); }.formFooter a { color: var(--ink); font-size: 10px; text-decoration: none; }.state { min-height: 55vh; display: grid; place-items: center; color: var(--navy); font-weight: 700; }
+.subscriptionSection { width: min(1020px, calc(100% - 32px)); margin: 0 auto 50px; padding: 28px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .55fr); gap: 22px 30px; border: 1px solid #e4f0f5; border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgba(28, 94, 127, .07); }
+.subscriptionsConttent { min-width: 0; grid-column: 1 / -1; }
+.subscriptionsConttent > span { display: inline-block; margin-bottom: 8px; color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.subscriptionsConttent h3 { margin: 0 0 9px; color: var(--navy); font-size: clamp(22px, 3vw, 30px); line-height: 1.2; }
+.subscriptionsConttent > p { max-width: 620px; margin: 0; color: #537497; font-size: 13px; line-height: 1.65; }
+.subscriptionsFeilds { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.subscriptionsFeilds > div { min-width: 0; padding: 15px; border: 1px solid #dcefe9; border-radius: 10px; background: #f3fbf8; }
+.subscriptionsFeilds > div > span { color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.subscriptionsFeilds > div p { margin: 6px 0 0; color: var(--navy); font-size: 14px; font-weight: 700; line-height: 1.35; }
+.subscriptionType { grid-column: 1 / -1; display: grid; gap: 8px; max-width: 360px; }
+.subscriptionType label { color: var(--navy); font-size: 12px; font-weight: 700; }
+.subscriptionType select { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--navy); font: inherit; font-size: 13px; }
+.subscriptionType select:focus-visible { outline: 3px solid rgba(8, 170, 120, .2); border-color: var(--green); }
+.subscriptionBundles { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.subscriptionnundle { min-width: 0; padding: 20px; display: flex; flex-direction: column; align-items: flex-start; border: 1px solid #dcefe9; border-radius: 12px; background: linear-gradient(145deg, #f4fbf8, #fff 72%); }
+.subscriptionnundle > span { color: var(--navy); font-size: 20px; font-weight: 800; }
+.subscriptionnundle > p { flex: 1; margin: 9px 0 18px; color: #537497; font-size: 13px; line-height: 1.55; }
+.subscriptionnundle button { width: 100%; min-height: 44px; padding: 10px 16px; border: 0; border-radius: 8px; background: var(--green); color: #fff; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+.subscriptionnundle button:hover { background: #078c65; box-shadow: 0 5px 14px rgba(8, 170, 120, .2); transform: translateY(-1px); }
+.subscriptionnundle button:focus-visible { outline: 3px solid rgba(8, 170, 120, .3); outline-offset: 3px; }
 @media (max-width: 760px) { .donationLayout { grid-template-columns: 1fr; }.heroContent { padding-left: 22px; }.campaignIntro { grid-template-columns: 150px 1fr; }.donationForm { order: -1; } }
-@media (max-width: 480px) { .heroSection { min-height: 205px; background-position: 63% center; }.heroContent { padding: 26px 20px; }.heroContent p { font-size: 14px; }.donationLayout { width: min(100% - 20px, 420px); margin-top: 12px; }.campaignCard, .donationForm { padding: 15px; }.campaignIntro { grid-template-columns: 1fr; }.campaignImage { height: 180px; }.metaGrid { grid-template-columns: 1fr; gap: 12px; }.metaGrid > div + div { border-top: 1px solid #d9eee9; border-left: 0; padding-top: 10px; padding-left: 0; }.amountOptions { gap: 6px; }.amountOptions button { padding: 0 3px; font-size: 10px; } }
+@media (max-width: 760px) { .subscriptionSection { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 22px; }.subscriptionsFeilds { grid-template-columns: repeat(2, minmax(0, 1fr)); }.subscriptionBundles { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .heroSection { min-height: 205px; background-position: 63% center; }.heroContent { padding: 26px 20px; }.heroContent p { font-size: 14px; }.donationLayout { width: min(100% - 20px, 420px); margin-top: 12px; }.campaignCard, .donationForm { padding: 15px; }.campaignIntro { grid-template-columns: 1fr; }.campaignImage { height: 180px; }.metaGrid { grid-template-columns: 1fr; gap: 12px; }.metaGrid > div + div { border-top: 1px solid #d9eee9; border-left: 0; padding-top: 10px; padding-left: 0; }.amountOptions { gap: 6px; }.amountOptions button { padding: 0 3px; font-size: 10px; }.subscriptionSection { width: calc(100% - 20px); margin-bottom: 32px; padding: 18px 15px; }.subscriptionsFeilds { gap: 8px; }.subscriptionsFeilds > div { padding: 12px; }.subscriptionnundle { padding: 16px; } }
+
+/* Payment methods are donation-only and remain accessible as button-style radios. */
+.paymentOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.paymentCard { min-height: 62px; border-color: var(--line); background: #fff; color: var(--navy); cursor: pointer; transition: border-color .18s ease, background-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.paymentCard:hover { border-color: var(--green); transform: translateY(-1px); }
+.paymentCard.selected { border-color: var(--green); background: #f3fcf8; box-shadow: 0 0 0 2px rgba(8, 170, 120, .14); }
+.paymentCard input { position: absolute; opacity: 0; pointer-events: none; }
+.paymentCard:focus-within { outline: 3px solid rgba(8, 170, 120, .2); outline-offset: 2px; }
+.paymentCard span:nth-of-type(2) { display: grid; flex: 1; gap: 4px; }
+@media (max-width: 480px) { .paymentOptions { grid-template-columns: 1fr; } }

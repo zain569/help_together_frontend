@@ -4,8 +4,10 @@ import GetAllCampaigns from '../apis/campaignsAPI/getallCampigns.get'
 import { useNavigate } from 'react-router-dom'
 import GetAllCauses from '../apis/causes/getAllCauses.get';
 import FilteredCampaigns from '../apis/campaignsAPI/filtersCampaigns.get';
+import { useCurrency } from '../utils/useCurrency';
 
 function Campaigns() {
+    const { formatCurrency } = useCurrency();
     const [campaigns, setCampaigns] = useState([]);
     const [causes, setCauses] = useState([]);
     const [page, setPage] = useState(1);
@@ -13,7 +15,6 @@ function Campaigns() {
     const [zakatEligible, setZakatEligible] = useState(false);
     const [urgent, setUrgent] = useState(false);
     const navigate = useNavigate();
-
     useEffect(() => {
         const fetchCampaigns = causeId || zakatEligible || urgent
             ? FilteredCampaigns({ causeId, zakatEligible, urgent })
@@ -112,6 +113,13 @@ function Campaigns() {
                             const raised = Number(campaign.collectedAmount)
                             const goal = Number(campaign.goalAmount)
                             const progress = goal > 0 ? Math.min((raised / goal) * 100, 100) : 0
+                            let status = 'Goining'
+
+                            if (campaign.status === 'published') {
+                                status = 'ONGOING'
+                            } else if (campaign.status === 'funded') {
+                                status = 'FUNDED'
+                            }
 
                             return (
                                 <article className={styles.campaignCard} key={campaign.id || campaign._id || index}>
@@ -121,6 +129,10 @@ function Campaigns() {
                                             src={campaign.image || campaign.imageUrl || campaign.coverImage}
                                             alt={campaign.title || campaign.name || 'Campaign'}
                                         />
+                                        <div style={{
+                                            backgroundColor: status === 'ONGOING' ? '#E8F7EE' : '#E9F6FD',
+                                            color: status === 'ONGOING' ? '#159957' : '#123B63'
+                                        }} className={styles.ribbon}>{status}</div>
                                         {campaign.cause?.name && (
                                             <span className={styles.causeBanner}>{campaign.cause.name}</span>
                                         )}
@@ -129,7 +141,7 @@ function Campaigns() {
                                         <h2>{campaign.title || campaign.name || 'Support a campaign'}</h2>
                                         <p>{campaign.description || 'Help create a brighter future for people in need.'}</p>
                                         <div className={styles.progressLabels}>
-                                            <span><i style={{ color: '#607b91' }}>{campaign.collectedAmount}</i> raised of {campaign.goalAmount}</span>
+                                            <span><i style={{ color: '#607b91' }}>{formatCurrency(raised)}</i> raised of {formatCurrency(goal)}</span>
                                             <span>{Math.round(progress)}%</span>
                                         </div>
                                         <div className={styles.progressTrack}>

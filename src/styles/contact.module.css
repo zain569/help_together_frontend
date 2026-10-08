@@ -78,7 +78,7 @@
     height: 48px;
     border-radius: 50%;
     background: #e5f9f7;
-    color: #08a36b;
+    color: #159957;
     font-size: 22px;
     font-weight: 800;
 }
@@ -181,7 +181,7 @@
     padding: 11px 20px;
     border: 0;
     border-radius: 10px;
-    background: #08a36b;
+    background: #159957;
     color: #ffffff;
     cursor: pointer;
     font-weight: 800;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles/getMyDonations.module.css'
 import GetMyDonation from '../apis/donations/getmyDonations.get';
+import { useCurrency } from '../utils/useCurrency';
 
 const formatAmount = (amount, currency = 'PKR') => `${currency} ${Number(amount || 0).toLocaleString('en-PK', { minimumFractionDigits: 2 })}`;
 
@@ -16,6 +17,7 @@ const getDonationType = (donation) => donation.campaign ? 'Campaign' : 'Service 
 const getStatusLabel = (status = '') => status.charAt(0) + status.slice(1).toLowerCase();
 
 function GetMyDonations() {
+    const { formatCurrency } = useCurrency();
     const [mydonations, setMyDonations] = useState([]);
     const [selectedDonation, setSelectedDonation] = useState(null);
     const [error, setError] = useState('');
@@ -71,7 +73,7 @@ function GetMyDonations() {
                     <div className={styles.progressEmoji}><span>💵</span></div>
                     <div className={styles.progressContent}>
                         <h1>Total Donated</h1>
-                        <p>{formatAmount(totalDonated)}</p>
+                        <p>{formatCurrency(totalDonated)}</p>
                     </div>
                 </div>
 
@@ -109,7 +111,7 @@ function GetMyDonations() {
                                     </div>
                                 </div>
                                 <div className={styles.historyAmount}>
-                                    <p>{formatAmount(donation.amount, donation.currency)}</p>
+                                    <p>{formatCurrency(donation.amount)}</p>
                                     <span>Donated</span>
                                 </div>
                                 <div className={styles.historyStatus}>
@@ -133,13 +135,16 @@ function GetMyDonations() {
                             <div><dt>Donor</dt><dd>{userName}</dd></div><div><dt>User ID</dt><dd>{userId}</dd></div>
                             <div><dt>Email</dt><dd>{userEmail}</dd></div><div><dt>Transaction ID</dt><dd>{selectedDonation.stripePaymentIntentId || selectedDonation.stripeSessionId || selectedDonation.id}</dd></div>
                             <div><dt>Purpose</dt><dd>{getDonationName(selectedDonation)}</dd></div><div><dt>Type</dt><dd>{getDonationType(selectedDonation)}</dd></div>
-                            <div><dt>Amount</dt><dd>{formatAmount(selectedDonation.amount, selectedDonation.currency)}</dd></div><div><dt>Payment method</dt><dd>{selectedDonation.paymentMethod || 'Unavailable'}</dd></div>
+                            <div><dt>Amount</dt><dd>{formatCurrency(selectedDonation.amount)}</dd></div><div><dt>Payment method</dt><dd>{selectedDonation.paymentMethod || 'Unavailable'}</dd></div>
                             <div><dt>Donated on</dt><dd>{formatDate(selectedDonation.createdAt)}</dd></div>
                         </dl>
                         <button type="button" className={styles.downloadButton} onClick={() => downloadReceipt(selectedDonation)}>Download receipt</button>
                     </section>
                 </div>
             )}
+
+            // My Subscriptions
+            
         </>
     )
 }

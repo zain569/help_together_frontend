@@ -6,7 +6,11 @@
     justify-content: center;
     padding: 60px 20px;
     box-sizing: border-box;
-    background: linear-gradient(135deg, #f3fcf8 0%, #f4fbff 100%);
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(21, 153, 87, 0.1), transparent 27%),
+        radial-gradient(circle at 88% 82%, rgba(18, 59, 99, 0.08), transparent 28%),
+        linear-gradient(135deg, #f3fcf8 0%, #f4fbff 100%);
 }
 
 .successCard {
@@ -18,19 +22,25 @@
     background-color: #ffffff;
     border: 1px solid #dcefe8;
     border-radius: 24px;
-    box-shadow: 0 12px 40px rgba(18, 59, 99, 0.09);
+    box-shadow: 0 18px 55px rgba(18, 59, 99, 0.12);
+    animation: cardEnter 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-.successIcon {
+.successIcon,
+.errorIcon {
     width: 90px;
     height: 90px;
-    margin: 0 auto 25px;
+    margin: 0 auto 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+}
+
+.successIcon {
     background-color: #e4f8ef;
     border: 7px solid #c9f0dd;
+    animation: iconPop 0.55s 0.12s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .successIcon span {
@@ -39,11 +49,29 @@
     font-weight: 800;
 }
 
+.errorIcon {
+    color: #b45309;
+    background-color: #fff7ed;
+    border: 7px solid #ffedd5;
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: #159957;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
 .successCard h1 {
     margin: 0 0 15px;
     color: #123b63;
-    font-size: 38px;
+    font-size: clamp(28px, 5vw, 38px);
     font-weight: 800;
+    line-height: 1.15;
 }
 
 .mainText {
@@ -51,14 +79,71 @@
     color: #159957;
     font-size: 19px;
     font-weight: 700;
+    line-height: 1.5;
 }
 
-.subText {
+.subText,
+.statusState > p {
     max-width: 500px;
     margin: 0 auto 25px;
     color: #5b7187;
     font-size: 15px;
     line-height: 1.7;
+}
+
+.statusState h1 {
+    margin-bottom: 12px;
+}
+
+.loader {
+    width: 56px;
+    height: 56px;
+    display: block;
+    margin: 8px auto 26px;
+    border: 5px solid #d8eee3;
+    border-top-color: #159957;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.paymentDetails {
+    display: grid;
+    gap: 0;
+    margin: 26px 0;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
+    background: #fbfefd;
+    border: 1px solid #e1efe8;
+    border-radius: 14px;
+}
+
+.paymentDetails > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 17px;
+    border-bottom: 1px solid #e8f2ed;
+}
+
+.paymentDetails > div:last-child {
+    border-bottom: 0;
+}
+
+.paymentDetails dt {
+    color: #5b7187;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.paymentDetails dd {
+    max-width: 65%;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: #123b63;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
 }
 
 .thankYouBox {
@@ -75,8 +160,8 @@
 }
 
 .thankYouBox span {
-    font-size: 25px;
     flex-shrink: 0;
+    font-size: 25px;
 }
 
 .thankYouBox p {
@@ -97,58 +182,77 @@
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.25s ease, transform 0.25s ease;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .homeButton:hover {
     background-color: #117d48;
+    box-shadow: 0 8px 20px rgba(21, 153, 87, 0.2);
     transform: translateY(-2px);
+}
+
+.homeButton:focus-visible {
+    outline: 3px solid rgba(21, 153, 87, 0.3);
+    outline-offset: 3px;
+}
+
+@keyframes cardEnter {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes iconPop {
+    from { opacity: 0; transform: scale(0.65); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 @media (max-width: 600px) {
     .successPage {
         min-height: 70vh;
-        padding: 40px 18px;
+        padding: 38px 18px;
     }
 
     .successCard {
-        padding: 40px 25px;
+        padding: 38px 24px;
         border-radius: 20px;
     }
 
-    .successIcon {
-        width: 75px;
-        height: 75px;
+    .successIcon,
+    .errorIcon {
+        width: 76px;
+        height: 76px;
     }
 
     .successIcon span {
         font-size: 40px;
     }
 
-    .successCard h1 {
-        font-size: 30px;
-    }
-
     .mainText {
         font-size: 17px;
     }
 
-    .subText {
+    .subText,
+    .statusState > p {
         font-size: 14px;
     }
 }
 
 @media (max-width: 400px) {
     .successPage {
-        padding: 30px 15px;
+        padding: 28px 14px;
     }
 
     .successCard {
-        padding: 35px 18px;
+        padding: 34px 18px;
     }
 
-    .successCard h1 {
-        font-size: 26px;
+    .paymentDetails > div {
+        gap: 10px;
+        padding: 12px;
     }
 
     .thankYouBox {
@@ -157,5 +261,17 @@
 
     .homeButton {
         max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .successCard,
+    .successIcon,
+    .loader {
+        animation: none;
+    }
+
+    .homeButton {
+        transition: none;
     }
 }

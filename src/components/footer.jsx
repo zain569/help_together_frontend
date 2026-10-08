@@ -1,8 +1,35 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from '../styles/footer.module.css'
 
 function Footer() {
-    const navigate = useNavigate()
+    const exploreLinks = [
+        ['Home', '/'],
+        ['About Us', '/about-us'],
+        ['Our Impact', '/our-impact'],
+        ['Our Values', '/our-values'],
+        ['Our Story', '/our-story'],
+        ['Our Partners', '/our-partners'],
+        ['Success Stories', '/our-success-story'],
+    ];
+
+    const actionLinks = [
+        ['Campaigns', '/campaigns'],
+        ['Funded Campaigns', '/funded_Campaigns'],
+        ['Service Gifts', '/service-gifts'],
+        ['Campaign Updates', '/campaigns-updates'],
+        ['Quick Donate', '/quick-donate'],
+        ['How It Works', '/how-it-work'],
+        ['What We Do', '/what-we-do'],
+        ['Why HelpTogether', '/why-helptogether'],
+    ];
+
+    const supportLinks = [
+        ['FAQ', '/faq'],
+        ['Contact', '/contact'],
+        ['Privacy Policy', '/privacy-policy'],
+        ['Terms & Conditions', '/term-condition'],
+    ];
+
     return (
         <>
             <footer className={styles.footer}>
@@ -21,22 +48,22 @@ function Footer() {
                             </p>
                         </div>
                     </div>
-                    <div className={styles.quickLinks}>
-                        <h3>Quick Links</h3>
+                    <div className={styles.footerLinkGroup}>
+                        <h3>Explore</h3>
                         <ul>
-                            <li onClick={() => { navigate('/') }}>Home</li>
-                            <li onClick={() => { navigate('/about-us') }}>About Us</li>
-                            <li onClick={() => { navigate('/campaigns') }}>Campaigns</li>
-                            <li onClick={() => { navigate('/contact') }}>Contact</li>
+                            {exploreLinks.map(([label, path]) => <li key={path}><Link to={path}>{label}</Link></li>)}
                         </ul>
                     </div>
-                    <div className={styles.support}>
+                    <div className={styles.footerLinkGroup}>
+                        <h3>Get Involved</h3>
+                        <ul>
+                            {actionLinks.map(([label, path]) => <li key={path}><Link to={path}>{label}</Link></li>)}
+                        </ul>
+                    </div>
+                    <div className={styles.footerLinkGroup}>
                         <h3>Support</h3>
                         <ul>
-                            <li onClick={() => { navigate('/how-it-work') }}>How it Work</li>
-                            <li onClick={() => { navigate('/faq') }}>FAQ</li>
-                            <li onClick={() => { navigate('/privacy-policy') }}>Privacy Policy</li>
-                            <li onClick={() => { navigate('/term-condition') }}>Term & Condition</li>
+                            {supportLinks.map(([label, path]) => <li key={path}><Link to={path}>{label}</Link></li>)}
                         </ul>
                     </div>
                     <div className={styles.contactus}>

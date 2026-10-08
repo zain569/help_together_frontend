@@ -15,6 +15,10 @@ import CreateCampaign from '../apis/campaignsAPI/CreateCampaign.post';
 import UpdateCampaign from '../apis/campaignsAPI/updateACampaigns.post';
 import DeleteCampaign from '../apis/campaignsAPI/deleteCampaign';
 import UpdateCampaignStatus from '../apis/campaignsAPI/changeCampaignStatus';
+import GetUpdates from '../apis/updates/updates.get';
+import CreateUpdate from '../apis/updates/updates.post';
+import UpdateUpdates from '../apis/updates/updates.patch';
+import DeleteUpdates from '../apis/updates/updates.delete';
 
 function AdminDashboard() {
     const [data, setData] = useState([]);
@@ -25,6 +29,7 @@ function AdminDashboard() {
     const [causes, setCauses] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [updates, setUpdates] = useState([]);
 
     const [showFaqForm, setShowFaqForm] = useState(false);
     const [editingFaq, setEditingFaq] = useState(null);
@@ -49,6 +54,10 @@ function AdminDashboard() {
                 setReviews(data.testimonials);
             })
             .then((err) => console.error(err))
+
+        GetUpdates()
+            .then((data) => { setUpdates(data) })
+            .catch((err) => console.error(err))
 
     }, [])
 
@@ -97,7 +106,7 @@ function AdminDashboard() {
         }
     };
 
-    {/*Make a Logic for Contact Reoly*/ }
+    {/*Make a Logic for Contact Reply*/ }
 
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [selectedContact, setSelectedContact] = useState(null);
@@ -249,8 +258,6 @@ function AdminDashboard() {
                     urgent: formData.get("urgent") === "on"
                 }
 
-                console.log(campaignData);
-
                 await UpdateCampaign(campaignData, editingCampaign.id);
 
                 setShowCampaignForm(false);
@@ -278,6 +285,48 @@ function AdminDashboard() {
             console.error("Failed to create campaign:", error);
         } finally {
             setCampaignsLoading(false);
+        }
+    }
+
+    {/*Make a logic for Adding, Update, Deleting, Updates*/ }
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [updateLoading, setUpdateLoading] = useState(false);
+    const [editingUpdates, setEditingUpdates] = useState(null);
+
+    async function handleAddUpdate(e) {
+        e.preventDefault();
+
+        setUpdateLoading(true)
+        if (editingUpdates) {
+            const data = new FormData(e.target);
+
+            const updatesData = {
+                title: data.get("title"),
+                description: data.get("description"),
+                causeName: data.get("causeName")
+            }
+
+            await UpdateUpdates(updatesData, editingUpdates.id);
+
+            console.log(updatesData);
+            setShowUpdateForm(false);
+            e.target.reset();
+            setUpdateLoading(false);
+        } else {
+            const data = new FormData(e.target);
+
+            const updatesData = {
+                image: data.get("image"),
+                title: data.get("title"),
+                description: data.get("description"),
+                causeName: data.get("causeName")
+            }
+
+            await CreateUpdate(updatesData);
+
+            setShowUpdateForm(false);
+            e.target.reset();
+            setUpdateLoading(false);
         }
     }
     return (
@@ -772,6 +821,97 @@ function AdminDashboard() {
                                             >
                                                 {review.isActive ? "Active" : "Inactive"}
                                             </span>
+                                        </td>
+
+                                    </tr>
+                                )
+                            })}
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </section>
+
+            {/* Updates */}
+
+            <section className={styles.updatesSection}>
+
+                <div className={styles.updatesTitle}>
+                    <h2>Updates</h2>
+                    <p>Manage the latest news and updates</p>
+                    <button onClick={() => setShowUpdateForm(true)}>{updateLoading ? "Adding..." : "+ Add Update"}</button>
+                </div>
+
+                <div className={styles.updatesTableWrapper}>
+                    <table className={styles.updatesTable}>
+
+                        <thead className={styles.updatesTableHeader}>
+                            <tr>
+                                <th scope="col">Update</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Cause</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody className={styles.updatesTableBody}>
+
+                            {updates.map((update) => {
+                                const formatDate = (date) => {
+                                    return new Date(date)
+                                        .toLocaleDateString("en-GB", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "2-digit"
+                                        })
+                                        .toUpperCase()
+                                        .replace(/ /g, " ")
+                                }
+                                return (
+                                    <tr key={update.id}>
+
+                                        <td>
+                                            <div className={styles.updatesItem}>
+
+                                                <img
+                                                    src={update.imageUrl}
+                                                    alt={update.title}
+                                                />
+                                                <span>
+                                                    {update.title}
+                                                </span>
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <p className={styles.updatesDescription}>
+                                                {update.description}
+                                            </p>
+                                        </td>
+
+                                        <td>
+                                            <span className={styles.updatesCause}>{update.causeName}</span>
+                                        </td>
+
+                                        <td>
+                                            <span>
+                                                {formatDate(update.createdAt)}
+                                            </span>
+                                        </td>
+                                        <td className={styles.updatesActions}>
+                                            <button type="button" onClick={() => {
+                                                setEditingUpdates(update);
+                                                setShowUpdateForm(true)
+                                            }} className={styles.updatesActionButton}>Update</button>
+                                            <button type="button" onClick={async () => {
+                                                await DeleteUpdates(update.id);
+
+                                                alert(`The cause of name ${update.title} is deleted Successfully`);
+                                            }} className={styles.updatesDeleteButton}>Delete</button>
                                         </td>
 
                                     </tr>
@@ -1501,6 +1641,130 @@ function AdminDashboard() {
                                 className={styles.campaignSubmitBtn}
                             >
                                 {campaignsLoading ? "Adding..." : "Add Campaign"}
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+            )}
+
+            {/*Show Updates Form*/}
+
+            {showUpdateForm && (
+                <div className={styles.updatesFormOverlay}>
+                    <form
+                        className={`${styles.causeForm} ${styles.updatesForm}`}
+                        onSubmit={handleAddUpdate}
+                    >
+
+                        {/* Header */}
+                        <div className={styles.causeFormHeader}>
+                            <div>
+                                <h2>{editingUpdates ? "Edit Update" : "Add New Update"}</h2>
+                                <p>{editingUpdates ? "Update the details below" : "Share a new update with your supporters"}</p>
+                            </div>
+
+                            <button
+                                type="button"
+                                className={styles.causeCloseBtn}
+                                onClick={() => {
+                                    setShowUpdateForm(false);
+                                    setEditingUpdates(null);
+                                }}
+                            >
+                                ×
+                            </button>
+                        </div>
+
+
+                        {/* Image */}
+                        {!editingUpdates && (<div className={styles.causeFormGroup}>
+                            <label htmlFor="causeImage">
+                                Update Image
+                            </label>
+
+                            <div className={styles.causeFileBox}>
+                                <input
+                                    id="causeImage"
+                                    type="file"
+                                    name="image"
+                                    accept="image/png, image/jpeg, image/webp"
+                                    required
+                                />
+
+                                <p>
+                                    JPG, PNG or WebP image
+                                </p>
+                            </div>
+                        </div>)}
+
+
+                        {/* Name */}
+                        <div className={styles.causeFormGroup}>
+                            <label htmlFor="causeName">
+                                Title
+                            </label>
+
+                            <input
+                                id="causeName"
+                                type="text"
+                                name="title"
+                                placeholder="Enter update title"
+                                defaultValue={editingUpdates?.title}
+                                required
+                            />
+                        </div>
+
+                        {/* Description */}
+                        <div className={styles.causeFormGroup}>
+                            <label htmlFor="causeDescription">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="causeDescription"
+                                name="description"
+                                rows="5"
+                                defaultValue={editingUpdates?.description}
+                                placeholder="Write the update details..."
+                                required
+                            ></textarea>
+                        </div>
+
+                        {/*Cause Name*/}
+                        <div className={styles.causeFormGroup}>
+                            <label htmlFor="campaignCause">
+                                Cause
+                            </label>
+
+                            <input type="text"
+                                placeholder="Enter related cause"
+                                name='causeName'
+                                defaultValue={editingUpdates?.causeName}
+                            />
+
+                            <small>
+                                Add the name of the cause related to this update.
+                            </small>
+                        </div>
+
+                        {/* Buttons */}
+                        <div className={styles.causeFormActions}>
+
+                            <button
+                                type="button"
+                                className={styles.causeCancelBtn}
+                                onClick={() => setShowUpdateForm(false)}
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                className={styles.causeSubmitBtn}
+                            >
+                                {editingUpdates ? "Save Update" : "Add Update"}
                             </button>
 
                         </div>
