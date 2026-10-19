@@ -336,6 +336,14 @@
     border-radius: 16px;
     background: #ffffff;
     box-shadow: 0 8px 24px rgba(18, 59, 99, 0.08);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campaignCard:hover,
+.campaignCard:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(18, 59, 99, 0.13);
 }
 
 .campaignImageContainer {

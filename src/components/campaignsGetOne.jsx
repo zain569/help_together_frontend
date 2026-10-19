@@ -4,22 +4,8 @@ import GetCampaign from '../apis/campaignsAPI/getCampaign.get';
 import GetAllCampaigns from '../apis/campaignsAPI/getallCampigns.get';
 import styles from '../styles/campaignGetOne.module.css';
 import { useCurrency } from '../utils/useCurrency';
-
-function formatDate(dateValue) {
-	if (!dateValue) return 'Not available';
-
-	const date = new Date(dateValue);
-	return Number.isNaN(date.getTime())
-		? dateValue
-		: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
-
-function getDaysLeft(endDate) {
-	if (!endDate) return 0;
-
-	const difference = new Date(endDate).getTime() - Date.now();
-	return Math.max(0, Math.ceil(difference / (1000 * 60 * 60 * 24)));
-}
+import CampaignDateProgress from './CampaignDateProgress';
+import { canDonateToCampaign } from '../utils/campaignDates';
 
 function amount(value) {
 	return Number(value || 0).toLocaleString();
@@ -69,8 +55,8 @@ function CampaignsGetOne() {
 	const remaining = Math.max(goal - raised, 0);
 	const progress = goal > 0 ? Math.min((raised / goal) * 100, 100) : 0;
 	const donors = campaign.donorsCount || campaign.donors || campaign.supporters || 0;
-	const endDate = campaign.endDate || campaign.end_date;
 	const campaignId = campaign.id || campaign._id || id;
+	const canDonate = canDonateToCampaign(campaign);
 
 	return (
 		<main className={styles.page}>
@@ -85,9 +71,9 @@ function CampaignsGetOne() {
 					<h1>{campaign.title || campaign.name}</h1>
 					<p className={styles.description}>{campaign.description}</p>
 
+					<CampaignDateProgress campaign={campaign} />
+
 					<div className={styles.metaGrid}>
-						<div><span>▣</span><p><b>End Date</b>{formatDate(endDate)}</p></div>
-						<div><span>◷</span><p><b>Days Left</b>{getDaysLeft(endDate)} days</p></div>
 						<div><span>♟</span><p><b>Donors</b>{amount(donors)}</p></div>
 					</div>
 				</div>
@@ -97,7 +83,8 @@ function CampaignsGetOne() {
 					<p>raised of {formatCurrency(goal)}</p>
 					<div className={styles.progressTrack} aria-label={`${Math.round(progress)} percent raised`}><span style={{ width: `${progress}%` }} /></div>
 					<div className={styles.moneyRow}><span>Money left</span><strong>{formatCurrency(remaining)}</strong></div>
-					<button type="button" onClick={() => navigate(`/donate/campaign/${campaignId}`)}>♥ Donate Now <span>→</span></button>
+					{canDonate && <button type="button" onClick={() => navigate(`/donate/campaign/${campaignId}`)}>♥ Donate Now <span>→</span></button>}
+					{!canDonate && <p className={styles.closedMessage}>This campaign is no longer accepting donations.</p>}
 					<button type="button" className={styles.shareButton}>↗ Share Campaign</button>
 				</div>
 			</section>
@@ -119,7 +106,13 @@ function CampaignsGetOne() {
 							return (
 								<article className={styles.relatedCard} key={relatedId} onClick={() => navigate(`/campaigns/${relatedId}`)}>
 									<img src={relatedCampaign.image || relatedCampaign.imageUrl || relatedCampaign.coverImage} alt="" />
-									<div><h3>{relatedCampaign.title || relatedCampaign.name}</h3><p>{relatedCampaign.description}</p><div className={styles.smallTrack}><span style={{ width: `${relatedProgress}%` }} /></div><small>{formatCurrency(relatedRaised)} raised</small></div>
+									<div>
+										<h3>{relatedCampaign.title || relatedCampaign.name}</h3>
+										<p>{relatedCampaign.description}</p>
+										<div className={styles.smallTrack}><span style={{ width: `${relatedProgress}%` }} /></div>
+										<small>{formatCurrency(relatedRaised)} raised</small>
+										<CampaignDateProgress campaign={relatedCampaign} />
+									</div>
 								</article>
 							);
 						})}

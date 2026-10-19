@@ -51,6 +51,12 @@ textarea:focus-visible {
     outline-offset: 3px;
 }
 
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
     :is(button, a)[class*="button" i],
     :is(button, a)[class*="btn" i] {

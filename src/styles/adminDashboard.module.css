@@ -4734,6 +4734,22 @@
     font-weight: 700;
 }
 
+.campaignFormGroup label span {
+    color: #7890a3;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.campaignDateGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.campaignDateGrid .campaignFormGroup {
+    min-width: 0;
+}
+
 
 /* =========================
    INPUT / TEXTAREA / SELECT
@@ -4741,6 +4757,7 @@
 
 .campaignFormGroup input[type="text"],
 .campaignFormGroup input[type="number"],
+.campaignFormGroup input[type="date"],
 .campaignFormGroup textarea,
 .campaignFormGroup select {
     width: 100%;
@@ -4766,6 +4783,7 @@
 
 .campaignFormGroup input[type="text"],
 .campaignFormGroup input[type="number"],
+.campaignFormGroup input[type="date"],
 .campaignFormGroup select {
     height: 45px;
 }
@@ -4795,6 +4813,7 @@
 
 .campaignFormGroup input[type="text"]:focus,
 .campaignFormGroup input[type="number"]:focus,
+.campaignFormGroup input[type="date"]:focus,
 .campaignFormGroup textarea:focus,
 .campaignFormGroup select:focus {
     border-color: #159957;
@@ -5050,6 +5069,11 @@
         padding: 22px;
 
         border-radius: 14px;
+    }
+
+    .campaignDateGrid {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 
     .campaignFormHeader h2 {

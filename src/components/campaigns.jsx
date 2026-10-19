@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import GetAllCauses from '../apis/causes/getAllCauses.get';
 import FilteredCampaigns from '../apis/campaignsAPI/filtersCampaigns.get';
 import { useCurrency } from '../utils/useCurrency';
+import CampaignDateProgress from './CampaignDateProgress';
+import { campaignDateDetails, canDonateToCampaign } from '../utils/campaignDates';
 
 function Campaigns() {
     const { formatCurrency } = useCurrency();
@@ -13,17 +15,18 @@ function Campaigns() {
     const [page, setPage] = useState(1);
     const [causeId, setCauseId] = useState('');
     const [zakatEligible, setZakatEligible] = useState(false);
+    const [sadaqah, setSadaqah] = useState(false);
     const [urgent, setUrgent] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        const fetchCampaigns = causeId || zakatEligible || urgent
-            ? FilteredCampaigns({ causeId, zakatEligible, urgent })
+        const fetchCampaigns = causeId || zakatEligible || sadaqah || urgent
+            ? FilteredCampaigns({ causeId, zakatEligible, sadaqah, urgent })
             : GetAllCampaigns({ page });
 
         fetchCampaigns
             .then((data) => setCampaigns(Array.isArray(data) ? data : data?.campaigns || []))
             .catch((error) => console.error('Campaigns fetch failed:', error))
-    }, [page, causeId, zakatEligible, urgent])
+    }, [page, causeId, zakatEligible, sadaqah, urgent])
 
     useEffect(() => {
         GetAllCauses()
@@ -96,6 +99,14 @@ function Campaigns() {
                         <label className={styles.filterOption}>
                             <input
                                 type="checkbox"
+                                checked={sadaqah}
+                                onChange={(event) => { setSadaqah(event.target.checked); setPage(1) }}
+                            />
+                            Sadaqah eligible
+                        </label>
+                        <label className={styles.filterOption}>
+                            <input
+                                type="checkbox"
                                 checked={urgent}
                                 onChange={(event) => { setUrgent(event.target.checked); setPage(1) }}
                             />
@@ -113,16 +124,33 @@ function Campaigns() {
                             const raised = Number(campaign.collectedAmount)
                             const goal = Number(campaign.goalAmount)
                             const progress = goal > 0 ? Math.min((raised / goal) * 100, 100) : 0
-                            let status = 'Goining'
+                            const campaignId = campaign.id || campaign._id;
+                            const isFunded = campaign.status?.toLowerCase() === 'funded' || (goal > 0 && raised >= goal);
+                            const { daysLeft } = campaignDateDetails(campaign);
+                            let status = 'ONGOING';
 
-                            if (campaign.status === 'published') {
-                                status = 'ONGOING'
-                            } else if (campaign.status === 'funded') {
-                                status = 'FUNDED'
+                            if (isFunded) {
+                                status = 'FUNDED';
+                            } else if (daysLeft === 0) {
+                                status = 'ENDED';
                             }
 
                             return (
-                                <article className={styles.campaignCard} key={campaign.id || campaign._id || index}>
+                                <article
+                                    className={styles.campaignCard}
+                                    key={campaignId || index}
+                                    role="link"
+                                    tabIndex={campaignId ? 0 : undefined}
+                                    aria-label={`View campaign: ${campaign.title || campaign.name || 'Support a campaign'}`}
+                                    onClick={() => campaignId && navigate(`/campaigns/${campaignId}`)}
+                                    onKeyDown={(event) => {
+                                        if (event.target !== event.currentTarget || !campaignId) return;
+                                        if (event.key === 'Enter' || event.key === ' ') {
+                                            event.preventDefault();
+                                            navigate(`/campaigns/${campaignId}`);
+                                        }
+                                    }}
+                                >
                                     <div className={styles.campaignImageContainer}>
                                         <img
                                             className={styles.campaignImage}
@@ -130,8 +158,8 @@ function Campaigns() {
                                             alt={campaign.title || campaign.name || 'Campaign'}
                                         />
                                         <div style={{
-                                            backgroundColor: status === 'ONGOING' ? '#E8F7EE' : '#E9F6FD',
-                                            color: status === 'ONGOING' ? '#159957' : '#123B63'
+                                            backgroundColor: status === 'ONGOING' ? '#E8F7EE' : status === 'ENDED' ? '#FFF1E8' : '#E9F6FD',
+                                            color: status === 'ONGOING' ? '#159957' : status === 'ENDED' ? '#A64B16' : '#123B63'
                                         }} className={styles.ribbon}>{status}</div>
                                         {campaign.cause?.name && (
                                             <span className={styles.causeBanner}>{campaign.cause.name}</span>
@@ -147,7 +175,19 @@ function Campaigns() {
                                         <div className={styles.progressTrack}>
                                             <span style={{ width: `${progress}%` }} />
                                         </div>
-                                        <button onClick={() => { navigate(`/donate/campaign/${campaign.id}`) }} className={styles.donateButton}>Donate Now</button>
+                                        <CampaignDateProgress campaign={campaign} />
+                                        {campaignId && canDonateToCampaign(campaign) && (
+                                            <button
+                                                type="button"
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    navigate(`/donate/campaign/${campaignId}`);
+                                                }}
+                                                className={styles.donateButton}
+                                            >
+                                                Donate Now
+                                            </button>
+                                        )}
                                     </div>
                                 </article>
                             )

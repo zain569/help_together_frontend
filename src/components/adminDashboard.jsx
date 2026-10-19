@@ -255,7 +255,10 @@ function AdminDashboard() {
                     goalAmount: Number(formData.get("goalAmount")),
                     causeId: formData.get("causeId"),
                     zakatEligible: formData.get("zakatEligible") === "on",
-                    urgent: formData.get("urgent") === "on"
+                    sadaqah: formData.get("sadaqah") === "on",
+                    urgent: formData.get("urgent") === "on",
+                    startDate: formData.get("startDate") || null,
+                    endDate: formData.get("endDate") || null
                 }
 
                 await UpdateCampaign(campaignData, editingCampaign.id);
@@ -272,7 +275,10 @@ function AdminDashboard() {
                     goalAmount: Number(formData.get("goalAmount")),
                     causeId: formData.get("causeId"),
                     zakatEligible: formData.get("zakatEligible") === "on",
-                    urgent: formData.get("urgent") === "on"
+                    sadaqah: formData.get("sadaqah") === "on",
+                    urgent: formData.get("urgent") === "on",
+                    startDate: formData.get("startDate") || null,
+                    endDate: formData.get("endDate") || null
                 };
 
                 await CreateCampaign(campaignData);
@@ -469,6 +475,7 @@ function AdminDashboard() {
                                 <td>Cause</td>
                                 <td>Status</td>
                                 <td>Zakat Eligible</td>
+                                <td>Sadaqah Eligible</td>
                                 <td>Urgent</td>
                                 <td>Action</td>
                                 <td>Chnage Status</td>
@@ -488,6 +495,7 @@ function AdminDashboard() {
                                             <td>{campaign.cause.name}</td>
                                             <td><span className={styles.campaignStatus}>{campaign.status}</span></td>
                                             <td>{campaign.zakatEligible ? "Yes" : "No"}</td>
+                                            <td>{campaign.sadaqah ? "Yes" : "No"}</td>
                                             <td>{campaign.urgent ? "Yes" : "No"}</td>
                                             <td>
                                                 <button onClick={() => {
@@ -1549,6 +1557,28 @@ function AdminDashboard() {
                             />
                         </div>
 
+                        <div className={styles.campaignDateGrid}>
+                            <div className={styles.campaignFormGroup}>
+                                <label htmlFor="campaignStartDate">Start date <span>(optional)</span></label>
+                                <input
+                                    id="campaignStartDate"
+                                    type="date"
+                                    name="startDate"
+                                    defaultValue={editingCampaign?.startDate?.slice(0, 10) || ""}
+                                />
+                            </div>
+
+                            <div className={styles.campaignFormGroup}>
+                                <label htmlFor="campaignEndDate">End date <span>(optional)</span></label>
+                                <input
+                                    id="campaignEndDate"
+                                    type="date"
+                                    name="endDate"
+                                    defaultValue={editingCampaign?.endDate?.slice(0, 10) || ""}
+                                />
+                            </div>
+                        </div>
+
 
                         {/* Cause */}
                         <div className={styles.campaignFormGroup}>
@@ -1559,7 +1589,7 @@ function AdminDashboard() {
                             <select
                                 id="campaignCause"
                                 name="causeId"
-                                defaultValue={editingCampaign?.cause.id || ""}
+                                defaultValue={editingCampaign?.cause?.id || ""}
                                 required
                             >
                                 <option value="" disabled>
@@ -1602,6 +1632,27 @@ function AdminDashboard() {
 
                         </div>
 
+                        {/* Sadaqah Eligible */}
+                        <div className={styles.campaignBooleanBox}>
+
+                            <label className={styles.campaignCheckboxLabel}>
+                                <input
+                                    type="checkbox"
+                                    name="sadaqah"
+                                    defaultChecked={editingCampaign?.sadaqah}
+                                />
+
+                                <span>
+                                    Sadaqah Eligible
+                                </span>
+                            </label>
+
+                            <p>
+                                Enable this if donations to this campaign are eligible for Sadaqah.
+                            </p>
+
+                        </div>
+
 
                         {/* Urgent */}
                         <div className={styles.campaignBooleanBox}>
@@ -1631,7 +1682,10 @@ function AdminDashboard() {
                             <button
                                 type="button"
                                 className={styles.campaignCancelBtn}
-                                onClick={() => setShowCampaignForm(false)}
+                                onClick={() => {
+                                    setShowCampaignForm(false);
+                                    setEditingCampaign(null);
+                                }}
                             >
                                 Cancel
                             </button>
@@ -1639,8 +1693,9 @@ function AdminDashboard() {
                             <button
                                 type="submit"
                                 className={styles.campaignSubmitBtn}
+                                disabled={campaignsLoading}
                             >
-                                {campaignsLoading ? "Adding..." : "Add Campaign"}
+                                {campaignsLoading ? "Saving..." : editingCampaign ? "Update Campaign" : "Add Campaign"}
                             </button>
 
                         </div>

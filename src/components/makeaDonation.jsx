@@ -5,12 +5,16 @@ import GetOneService from '../apis/serviceandgiftsAPIS/getoneService';
 import { readAuthSession } from '../utils/authSession';
 import styles from '../styles/makeaDonation.module.css';
 import { useCurrency } from '../utils/useCurrency';
+import { currencies } from '../utils/currencies';
 import MakeSubscriptions from '../apis/donations/makeSubscription';
 import CreateNormalDonation from '../apis/donations/createNormalDonation.post';
+import CampaignDateProgress from './CampaignDateProgress';
+import { canDonateToCampaign } from '../utils/campaignDates';
 
 function MakeaDonation() {
     const { type, id } = useParams();
-    const { currencySymbol, exchangeRate, formatCurrency } = useCurrency();
+    const { currencyCode, currencySymbol, exchangeRate, formatCurrency } = useCurrency();
+    const selectedCurrency = currencies.find(({ code }) => code === currencyCode) || currencies[0];
     const isServiceDonation = type?.toLowerCase() === 'service';
     const [donationTarget, setDonationTarget] = useState(null);
     const [amount, setAmount] = useState(isServiceDonation ? 0 : 1000);
@@ -66,11 +70,13 @@ function MakeaDonation() {
     const targetImage = donationTarget.image || donationTarget.imageUrl || donationTarget.coverImage || '/campaign-section-hero.png';
     const description = donationTarget.description || 'Help this cause create lasting change for the people and communities it supports.';
     const userId = readAuthSession()?.user?.id || localStorage.getItem('userId') || '';
+    const canDonate = isServiceDonation || canDonateToCampaign(donationTarget);
 
     const donationDetails = {
         amount: Number(amount),
         donationType,
         paymentMethod,
+        currency: currencyCode,
         userId,
         ...(isServiceDonation ? { serviceGiftId: id } : { campaignId: id }),
     };
@@ -79,6 +85,11 @@ function MakeaDonation() {
         event.preventDefault();
         setSubmitError('');
         setIsSubmitted(false);
+
+        if (!canDonate) {
+            setSubmitError('This campaign is no longer accepting donations.');
+            return;
+        }
 
         if (!donationDetails.userId) {
             setSubmitError('Please log in before making a donation.');
@@ -93,10 +104,6 @@ function MakeaDonation() {
         setIsSubmitting(true);
         try {
             const response = await CreateNormalDonation(donationDetails);
-
-            if (!response.ok) {
-                throw new Error(response?.message || `Donation failed (${response?.status})`);
-            }
 
             if (response.checkoutUrl && paymentMethod === "STRIPE") {
                 window.location.assign(response.checkoutUrl);
@@ -162,6 +169,7 @@ function MakeaDonation() {
                         <div><span className={styles.metaIcon}>+</span><p><b>Beneficiaries</b>{donationTarget.beneficiaries || 'Many families'}</p></div>
                         <div><span className={styles.metaIcon}>+</span><p><b>{isServiceDonation ? 'Availability' : 'Started'}</b>{isServiceDonation ? 'Available now' : donationTarget.startDate ? new Date(donationTarget.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'}</p></div>
                     </div>
+                    {!isServiceDonation && <CampaignDateProgress campaign={donationTarget} />}
 
                     <div className={styles.impactNote}>
                         <span className={styles.heartIcon}>♡</span>
@@ -183,6 +191,11 @@ function MakeaDonation() {
                         <option value="zakat">Zakat</option>
                         <option value="sadaqah">Sadaqah</option>
                     </select>
+                    <div className={styles.currencyField} aria-live="polite">
+                        <span>Donation currency</span>
+                        <strong>{selectedCurrency.flag} {currencyCode} <span>({currencySymbol})</span></strong>
+                        <small>Change your currency from the menu above.</small>
+                    </div>
                     {isServiceDonation ? (
                         <div className={styles.fixedAmount}>
                             <span>Fixed service gift amount</span>
@@ -221,7 +234,11 @@ function MakeaDonation() {
 
                     {submitError && <p className={styles.formError} role="alert">{submitError}</p>}
                     {isSubmitted && <p className={styles.formSuccess} role="status">Donation created successfully.</p>}
-                    <button className={styles.submitButton} type="submit" disabled={isSubmitting || !Number(amount)}><span>♡</span>{isSubmitting ? 'Processing...' : 'Donate Now'}</button>
+                    {canDonate ? (
+                        <button className={styles.submitButton} type="submit" disabled={isSubmitting || !Number(amount)}><span>♡</span>{isSubmitting ? 'Processing...' : 'Donate Now'}</button>
+                    ) : (
+                        <p className={styles.campaignClosed} role="status">This campaign is no longer accepting donations.</p>
+                    )}
                     <p className={styles.securityNote}>▣ Your payment information is safe and secure.</p>
                     <div className={styles.formFooter}><Link to={isServiceDonation ? '/service-gifts' : `/campaigns/${id}`}>← &nbsp;Back to {isServiceDonation ? 'Services' : 'Campaign'}</Link></div>
                 </form>

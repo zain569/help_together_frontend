@@ -218,12 +218,14 @@
     border-radius: 8px;
     background: #ffffff;
     box-shadow: 0 8px 22px rgba(24, 62, 54, 0.06);
+    cursor: pointer;
     animation: cardIn 0.55s both;
     animation-delay: min(calc(var(--card-index, 0) * 65ms), 390ms);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.campaignCard:hover {
+.campaignCard:hover,
+.campaignCard:focus-visible {
     transform: translateY(-5px);
     box-shadow: 0 16px 34px rgba(24, 62, 54, 0.13);
 }

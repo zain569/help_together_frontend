@@ -63,6 +63,7 @@ function QuickDonate({
                 amount,
                 donationType: data.donationType,
                 paymentMethod: data.paymentMethod,
+                currency: currencyCode,
                 campaignId: "6c0f87e8-adbd-4648-8f6e-2eeefed6f991"
             });
             if (donationResponse?.checkoutUrl) {

@@ -1,4 +1,4 @@
-async function CreateDonation({ userId, amount, donationType, campaignId, paymentMethod }) {
+async function CreateDonation({ userId, amount, donationType, campaignId, paymentMethod, currency }) {
     const backendApi = (import.meta.env.VITE_BACKEND_API || '').replace(/\/?$/, '/');
 
     if (paymentMethod === "STRIPE") {
@@ -6,7 +6,7 @@ async function CreateDonation({ userId, amount, donationType, campaignId, paymen
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId, amount, donationType, campaignId, paymentMethod }),
+            body: JSON.stringify({ userId, amount, donationType, campaignId, paymentMethod, currency }),
         });
 
         const responseText = await response.text();
@@ -33,7 +33,7 @@ async function CreateDonation({ userId, amount, donationType, campaignId, paymen
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId, amount, donationType, campaignId, paymentMethod }),
+            body: JSON.stringify({ userId, amount, donationType, campaignId, paymentMethod, currency }),
         });
 
         const data = await response.json();

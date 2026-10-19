@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/fundedCampaigns.module.css';
 import { useCurrency } from '../utils/useCurrency';
 import FundedCampaignsApi from '../apis/campaignsAPI/fundedCampaigns';
+import CampaignDateProgress from './CampaignDateProgress';
 
 function FundedCampaigns() {
+    const navigate = useNavigate();
     const { formatCurrency } = useCurrency();
     const [campaigns, setCampaigns] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -77,6 +79,17 @@ function FundedCampaigns() {
                                     className={styles.campaignCard}
                                     key={campaignId || `${campaign.title || campaign.name || 'funded'}-${index}`}
                                     style={{ '--card-index': index }}
+                                    role="link"
+                                    tabIndex={campaignId ? 0 : undefined}
+                                    aria-label={`View campaign: ${campaign.title || campaign.name || 'Funded campaign'}`}
+                                    onClick={() => campaignId && navigate(`/campaigns/${campaignId}`)}
+                                    onKeyDown={(event) => {
+                                        if (event.target !== event.currentTarget || !campaignId) return;
+                                        if (event.key === 'Enter' || event.key === ' ') {
+                                            event.preventDefault();
+                                            navigate(`/campaigns/${campaignId}`);
+                                        }
+                                    }}
                                 >
                                     <div className={styles.campaignImageContainer}>
                                         {image ? (
@@ -113,8 +126,9 @@ function FundedCampaigns() {
                                             <span>Goal reached</span>
                                             <span>{formatCurrency(goal)} goal</span>
                                         </div>
+                                        <CampaignDateProgress campaign={campaign} />
                                         {campaignId && (
-                                            <Link className={styles.storyLink} to={`/campaigns/${campaignId}`}>
+                                            <Link className={styles.storyLink} to={`/campaigns/${campaignId}`} onClick={(event) => event.stopPropagation()}>
                                                 View campaign <span aria-hidden="true">-&gt;</span>
                                             </Link>
                                         )}

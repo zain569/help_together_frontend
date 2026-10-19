@@ -11,6 +11,14 @@ async function CreateNormalDonation(donationDetails) {
 
         const donationResponse = await response.json();
 
+        if (!response.ok) {
+            throw new Error(
+                Array.isArray(donationResponse.message)
+                    ? donationResponse.message.join(", ")
+                    : donationResponse.message || `Donation failed (${response.status})`
+            );
+        }
+
         return donationResponse;
     } else if (donationDetails.paymentMethod === "JAZZCASH") {
         const response = await fetch(`${backendApi}donation`, {

@@ -1,0 +1,91 @@
+.timeline {
+    display: grid;
+    grid-template-columns: minmax(65px, 0.9fr) minmax(70px, 1.1fr) minmax(65px, 0.9fr);
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.dateLabel {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.dateLabel span {
+    color: #60758a;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.dateLabel strong {
+    overflow-wrap: anywhere;
+    color: #123b63;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.endDate {
+    text-align: right;
+}
+
+.timelineTrack {
+    position: relative;
+    min-width: 0;
+}
+
+.track {
+    width: 100%;
+    height: 24px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: #e3eef3;
+}
+
+.track span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #159957, #45c46b);
+    transition: width 300ms ease;
+}
+
+.daysLeft {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 2px;
+    border-radius: 99px;
+    color: #123b63;
+    background: rgba(255, 255, 255, 0.72);
+    font-size: 10px;
+    line-height: 1.15;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 420px) {
+    .timeline {
+        grid-template-columns: minmax(60px, 0.9fr) minmax(65px, 1.1fr) minmax(60px, 0.9fr);
+        gap: 6px;
+    }
+
+    .dateLabel span {
+        font-size: 9px;
+    }
+
+    .dateLabel strong,
+    .daysLeft {
+        font-size: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .track span {
+        transition: none;
+    }
+}
